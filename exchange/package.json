@@ -1,0 +1,31 @@
+{
+  "name": "exchange-app",
+  "version": "1.0.0",
+  "description": "Un microservizio per ottenere i rapporti di cambio tra le valute dalla BCE",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "ts-node app.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/danielenassisi/exchange-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/danielenassisi/exchange-app/issues"
+  },
+  "homepage": "https://github.com/danielenassisi/exchange-app#readme",
+  "devDependencies": {
+    "grpc-tools": "^1.10.0",
+    "grpc_tools_node_protoc_ts": "^5.1.1",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "^1.2.7",
+    "@grpc/proto-loader": "^0.5.6",
+    "google-protobuf": "^3.15.0-rc.1"
+  }
+}
