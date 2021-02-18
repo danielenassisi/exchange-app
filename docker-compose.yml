@@ -1,3 +1,14 @@
 version: "3.9"
+
 services:
   exchange:
+    build: './exchange'
+    ports: 
+      - 9000:9000
+  # users:
+  #   ports: 
+  #     - 9001:9001    
+  # api:
+  # frontend:
+
+
