@@ -1,8 +1,17 @@
-import loader from "./utils/loader";
-import load from "./utils/loader"
-import { join } from "path"
+import { ServerCredentials } from '@grpc/grpc-js'
+import makeServer from './utils/exchangeServerFactory'
 
-const PROTO_PATH = join('.', 'protos', 'exchange.proto') 
+const HOST = "0.0.0.0"
+const PORT = 9000
 
-const service = load(PROTO_PATH, "exchange")
-console.log(service)
+// TODO: implemetare gestione errori 
+const server = makeServer(HOST, PORT)
+
+server.bindAsync(`${HOST}:${PORT}`, ServerCredentials.createInsecure(), (err, port) => {
+  if (err) {
+    console.log(err)
+    server.forceShutdown()
+  }
+
+  server.start()
+})
