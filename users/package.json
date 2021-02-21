@@ -1,7 +1,7 @@
 {
-  "name": "exchange-app-exchange-service",
+  "name": "exchange-app-users-service",
   "version": "1.0.0",
-  "description": "Un microservizio per ottenere i rapporti di cambio tra le valute dalla BCE",
+  "description": "Un microservizio per gestire le transazioni degli utenti",
   "main": "app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,8 +18,10 @@
   },
   "homepage": "https://github.com/danielenassisi/exchange-app#readme",
   "devDependencies": {
+    "@types/node": "^14.14.30",
     "grpc-tools": "^1.10.0",
     "grpc_tools_node_protoc_ts": "^5.1.1",
+    "prisma": "^2.17.0",
     "ts-node": "^9.1.1",
     "typescript": "^4.1.5"
   },

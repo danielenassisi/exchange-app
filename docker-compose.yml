@@ -5,9 +5,18 @@ services:
     build: './exchange'
     ports: 
       - 9000:9000
-  # users:
-  #   ports: 
-  #     - 9001:9001    
+  users:
+    build: './users'
+    ports: 
+      - 9001:9001
+    depends_on:
+      - users_db
+  users_db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: example    
   # api:
   # frontend:
 

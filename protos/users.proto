@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+
+package users;
+
+message User {
+  string name = 1;
+  string surname = 2;
+  string email = 3;
+  string iban = 4;
+}
+
+message SignupRequest {
+  string email = 1;
+  string password = 2;
+  string name = 3;
+  string surname = 4;
+  string iban = 5;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string token = 1;
+  User user = 2;
+}
+
+message DepositRequest {
+  double value = 1;
+  string symbol = 2;
+}
+
+message WithdrawRequest {
+  double value = 1;
+  string symbol = 2;
+}
+
+message BuyRequest {
+  string from_symbol = 1;
+  double value = 2;
+  string to_symbol = 3;
+}
+
+
+message Transaction {
+  double value = 1;
+  string symbol = 2;
+  string date = 3;
+}
+
+message ListTransactionsRequest {
+  repeated string date = 1;
+  repeated string currency = 2;
+}
+
+message ListTransactionsResponse {
+  repeated Transaction transactions = 1;
+}
+
+service UsersService {
+  rpc Signup(SignupRequest) returns (google.protobuf.Empty);
+  rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Deposit(DepositRequest) returns (google.protobuf.Empty);
+  rpc Withdraw(WithdrawRequest) returns (google.protobuf.Empty);
+  rpc Buy(BuyRequest) returns (google.protobuf.Empty);
+  rpc ListTransactions(ListTransactionsRequest) returns (ListTransactionsResponse);
+}
