@@ -4,20 +4,27 @@ services:
   exchange:
     build: './exchange'
     ports: 
-      - 9000:9000
+      - "9000:9000"
   users:
     build: './users'
     ports: 
-      - 9001:9001
+      - "9001:9001"
+    volumes:
+      - ./users:/app
+    tty: true
+    stdin_open: true
     depends_on:
-      - users_db
-  users_db:
+      - usersdb
+  usersdb:
     image: mysql
     command: --default-authentication-plugin=mysql_native_password
     restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: example    
-  # api:
-  # frontend:
-
+    env_file:
+      - '.env'
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+volumes:
+  mysql-data:
 
