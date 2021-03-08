@@ -1,14 +1,15 @@
 import { ISignupViewModel } from "../models/users/signup/ISignupViewModel"
 import { ILoginViewModel } from "../models/users/login/ILoginViewModel"
 import { UsersServiceClient } from "../proto_build/users_grpc_pb"
-import { SignupRequest } from "../proto_build/users_pb"
-import { ChannelCredentials } from "@grpc/grpc-js"
+import { SignupRequest, LoginRequest, LoginResponse } from "../proto_build/users_pb"
+import { ChannelCredentials, ServiceError } from "@grpc/grpc-js"
+import { response } from "express"
 
 export class UsersService {
   private static ADDRESS = "users:9001"
+  private static client = new UsersServiceClient(UsersService.ADDRESS, ChannelCredentials.createInsecure()) 
 
   async signup(signupViewModel: ISignupViewModel) {
-    const client = new UsersServiceClient(UsersService.ADDRESS, ChannelCredentials.createInsecure())
     const { email, name, surname, iban, password } = signupViewModel
     const request = new SignupRequest()
 
@@ -20,7 +21,7 @@ export class UsersService {
 
     try {
       const signupUser = await new Promise((resolve, reject) => {
-        client.signup(request, (error, response) => {
+        UsersService.client.signup(request, (error, response) => {
           if (error) reject(error)
           else resolve(response)
         })
@@ -33,7 +34,23 @@ export class UsersService {
     return true
   }
 
-  async login() {
+  async login({ email, password }: ILoginViewModel) {
+    const request = new LoginRequest()
 
+    request.setEmail(email)
+    request.setPassword(password)
+
+    try {
+      const loginRes: LoginResponse = await new Promise((resolve, reject) => {
+        UsersService.client.login(request, (error, response) => {
+          if (error) reject(error)
+          else resolve(response)
+        })
+      })
+
+      return loginRes.toObject()
+    } catch(err) {
+      throw err
+    }
   }
 }

@@ -18,7 +18,20 @@ export async function addUser({ email, name, surname, iban, password }: ISignupR
     
     return user
   } catch (e) {
-    return null;
+    throw e;
   }
 }
 
+export async function getUserByEmail(email: string) {
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        email
+      }
+    })
+
+    return user
+  } catch(e) {
+    throw e
+  }
+}
