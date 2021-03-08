@@ -1,10 +1,10 @@
-import { PrismaClient } from "@prisma/client"
+import { ServerCredentials } from "@grpc/grpc-js"
+import { prisma } from "./utils/prisma"
 import makeServer from './utils/exchangeServerFactory'
 
 const HOST = "0.0.0.0"
 const PORT = 9001
 
-const prisma = new PrismaClient()
 const usersGrpcServer = makeServer(HOST, PORT)
 
 async function main() {

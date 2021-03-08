@@ -28,7 +28,7 @@ services:
   api:
     build: './api'
     ports:
-      - "80:8000"
+      - "8000:80"
     volumes:
       - ./api:/app
 volumes:

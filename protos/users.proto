@@ -5,10 +5,11 @@ import "google/protobuf/empty.proto";
 package users;
 
 message User {
-  string name = 1;
-  string surname = 2;
-  string email = 3;
-  string iban = 4;
+  string id = 1;
+  string name = 2;
+  string surname = 3;
+  string email = 4;
+  string iban = 5;
 }
 
 message SignupRequest {
@@ -47,9 +48,10 @@ message BuyRequest {
 
 
 message Transaction {
-  double value = 1;
-  string symbol = 2;
-  string date = 3;
+  string id = 1;
+  double value = 2;
+  string symbol = 3;
+  string date = 4;
 }
 
 message ListTransactionsRequest {

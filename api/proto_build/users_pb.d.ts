@@ -10,19 +10,14 @@ import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty
 export class User extends jspb.Message { 
     getId(): string;
     setId(value: string): User;
-
     getName(): string;
     setName(value: string): User;
-
     getSurname(): string;
     setSurname(value: string): User;
-
     getEmail(): string;
     setEmail(value: string): User;
-
     getIban(): string;
     setIban(value: string): User;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): User.AsObject;
@@ -47,19 +42,14 @@ export namespace User {
 export class SignupRequest extends jspb.Message { 
     getEmail(): string;
     setEmail(value: string): SignupRequest;
-
     getPassword(): string;
     setPassword(value: string): SignupRequest;
-
     getName(): string;
     setName(value: string): SignupRequest;
-
     getSurname(): string;
     setSurname(value: string): SignupRequest;
-
     getIban(): string;
     setIban(value: string): SignupRequest;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): SignupRequest.AsObject;
@@ -84,10 +74,8 @@ export namespace SignupRequest {
 export class LoginRequest extends jspb.Message { 
     getEmail(): string;
     setEmail(value: string): LoginRequest;
-
     getPassword(): string;
     setPassword(value: string): LoginRequest;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): LoginRequest.AsObject;
@@ -110,12 +98,10 @@ export class LoginResponse extends jspb.Message {
     getToken(): string;
     setToken(value: string): LoginResponse;
 
-
     hasUser(): boolean;
     clearUser(): void;
     getUser(): User | undefined;
     setUser(value?: User): LoginResponse;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): LoginResponse.AsObject;
@@ -137,10 +123,8 @@ export namespace LoginResponse {
 export class DepositRequest extends jspb.Message { 
     getValue(): number;
     setValue(value: number): DepositRequest;
-
     getSymbol(): string;
     setSymbol(value: string): DepositRequest;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): DepositRequest.AsObject;
@@ -162,10 +146,8 @@ export namespace DepositRequest {
 export class WithdrawRequest extends jspb.Message { 
     getValue(): number;
     setValue(value: number): WithdrawRequest;
-
     getSymbol(): string;
     setSymbol(value: string): WithdrawRequest;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): WithdrawRequest.AsObject;
@@ -187,13 +169,10 @@ export namespace WithdrawRequest {
 export class BuyRequest extends jspb.Message { 
     getFromSymbol(): string;
     setFromSymbol(value: string): BuyRequest;
-
     getValue(): number;
     setValue(value: number): BuyRequest;
-
     getToSymbol(): string;
     setToSymbol(value: string): BuyRequest;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): BuyRequest.AsObject;
@@ -216,16 +195,12 @@ export namespace BuyRequest {
 export class Transaction extends jspb.Message { 
     getId(): string;
     setId(value: string): Transaction;
-
     getValue(): number;
     setValue(value: number): Transaction;
-
     getSymbol(): string;
     setSymbol(value: string): Transaction;
-
     getDate(): string;
     setDate(value: string): Transaction;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Transaction.AsObject;
@@ -251,12 +226,10 @@ export class ListTransactionsRequest extends jspb.Message {
     getDateList(): Array<string>;
     setDateList(value: Array<string>): ListTransactionsRequest;
     addDate(value: string, index?: number): string;
-
     clearCurrencyList(): void;
     getCurrencyList(): Array<string>;
     setCurrencyList(value: Array<string>): ListTransactionsRequest;
     addCurrency(value: string, index?: number): string;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListTransactionsRequest.AsObject;
@@ -280,7 +253,6 @@ export class ListTransactionsResponse extends jspb.Message {
     getTransactionsList(): Array<Transaction>;
     setTransactionsList(value: Array<Transaction>): ListTransactionsResponse;
     addTransactions(value?: Transaction, index?: number): Transaction;
-
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListTransactionsResponse.AsObject;

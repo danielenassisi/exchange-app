@@ -3,6 +3,7 @@ import { ExchangeRequest, ExchangeResponse } from '../proto_build/exchange_pb'
 import { ServerUnaryCall, sendUnaryData } from "@grpc/grpc-js"
 import IEcbResponse from '../models/IEcbResponse'
 import axios from "axios"
+import { Status } from '@grpc/grpc-js/build/src/constants'
 
 const serverImpl: IExchangeServiceServer = {
   exchange(call: ServerUnaryCall<ExchangeRequest, ExchangeResponse>, callback: sendUnaryData<ExchangeResponse>): void {
@@ -14,7 +15,7 @@ const serverImpl: IExchangeServiceServer = {
         const exchangeRate = data.rates.get(to);
         
         if (!exchangeRate) {
-          callback(null)
+          callback({ code: Status.NOT_FOUND })
         }
 
         const exchangeReponse = new ExchangeResponse()
@@ -23,7 +24,7 @@ const serverImpl: IExchangeServiceServer = {
       })
       .catch(err => {
         console.log(err)
-        callback(null)
+        callback({ code: Status.INVALID_ARGUMENT })
       })
   }
 }
