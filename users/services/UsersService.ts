@@ -4,11 +4,15 @@ import { BuyRequest, DepositRequest, ListTransactionsRequest, ListTransactionsRe
 import * as google_protobuf from "google-protobuf/google/protobuf/empty_pb"
 import ISignupRequest from "../models/ISignupRequest"
 import ILoginRequest from "../models/ILoginRequest"
-import { addUser, getUserByEmail } from "../repositories/UserRepository"
+import { addUser, getUserByEmail, getUserById } from "../repositories/UserRepository"
 import { Status } from "@grpc/grpc-js/build/src/constants"
 import { compare } from "bcrypt"
-import { User as DbUser } from "@prisma/client"
+import { User as DbUser, CurrentAccount } from "@prisma/client"
 import { generateJwtToken } from "../utils/jwt"
+import IDepositRequest from "../models/IDepositRequest"
+import { createDeposit, createWithdraw } from "../repositories/CurrencyRepository"
+import IWithdrawRequest from "../models/IWithdrawRequest"
+import { getCurrentAccountBySymbol } from "../repositories/CurrentAccountRepository"
 
 const serverImpl: IUsersServiceServer = {
   signup(call: ServerUnaryCall<SignupRequest, google_protobuf.Empty>, callback: sendUnaryData<google_protobuf.Empty>): void {
@@ -31,7 +35,7 @@ const serverImpl: IUsersServiceServer = {
   login(call: ServerUnaryCall<LoginRequest, LoginResponse>, callback: sendUnaryData<LoginResponse>): void {
     const loginRequest: ILoginRequest = { email: call.request.getEmail(), password: call.request.getPassword() }
 
-    let dbuser: void | DbUser;
+    let dbuser: void | DbUser
     getUserByEmail(loginRequest.email)
       .then(user => {
         dbuser = user ?? callback({ code: Status.NOT_FOUND })
@@ -61,8 +65,37 @@ const serverImpl: IUsersServiceServer = {
         callback(null, response)
       })
   },
-  deposit(call: ServerUnaryCall<DepositRequest, google_protobuf.Empty>, callback: sendUnaryData<google_protobuf.Empty>): void { },
-  withdraw(call: ServerUnaryCall<WithdrawRequest, google_protobuf.Empty>, callback: sendUnaryData<google_protobuf.Empty>): void { },
+  deposit(call: ServerUnaryCall<DepositRequest, google_protobuf.Empty>, callback: sendUnaryData<google_protobuf.Empty>): void {
+    const depositReq: IDepositRequest = { userId: call.request.getUserid(), value: call.request.getValue(), symbol: call.request.getSymbol() }
+
+    getUserById(depositReq.userId)
+      .then(u => {
+        const user = u ?? callback({ code: Status.NOT_FOUND })
+        return createDeposit(depositReq)
+      })
+      .catch(e => callback({ code: Status.INTERNAL }))
+      .then(res => res ? callback(null) : callback({ code: Status.INTERNAL }))
+      .catch(e => callback({ code: Status.INTERNAL }))
+  },
+  withdraw(call: ServerUnaryCall<WithdrawRequest, google_protobuf.Empty>, callback: sendUnaryData<google_protobuf.Empty>): void {
+    const withdrawReq: IWithdrawRequest = { userId: call.request.getUserid(), value: call.request.getValue(), symbol: call.request.getSymbol() }
+
+    getCurrentAccountBySymbol(withdrawReq.userId, withdrawReq.symbol)
+      .then(ca => {
+        if (!ca) {
+          callback({ code: Status.NOT_FOUND })
+        }
+
+        if (ca?.value.lt(withdrawReq.value)) {
+          callback({ code: Status.INVALID_ARGUMENT })
+        }
+
+        return createWithdraw(withdrawReq)
+      })
+      .catch(e => callback({ code: Status.INTERNAL }))
+      .then(res => res ? callback(null) : callback({ code: Status.NOT_FOUND }))
+      .catch(e => callback({ code: Status.INTERNAL }))
+  },
   buy(call: ServerUnaryCall<BuyRequest, google_protobuf.Empty>, callback: sendUnaryData<google_protobuf.Empty>): void { },
   listTransactions(call: ServerUnaryCall<ListTransactionsRequest, ListTransactionsResponse>, callback: sendUnaryData<ListTransactionsResponse>): void { },
 }

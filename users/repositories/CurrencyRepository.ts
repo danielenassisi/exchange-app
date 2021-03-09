@@ -91,16 +91,3 @@ export async function createWithdraw({ userId, symbol, value }: IWithdrawRequest
   }
 }
 
-export async function getUserByEmail(email: string) {
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        email
-      }
-    })
-
-    return user
-  } catch(e) {
-    throw e
-  }
-}
