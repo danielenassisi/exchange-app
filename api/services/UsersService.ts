@@ -3,7 +3,6 @@ import { ILoginViewModel } from "../models/users/login/ILoginViewModel"
 import { UsersServiceClient } from "../proto_build/users_grpc_pb"
 import { SignupRequest, LoginRequest, LoginResponse } from "../proto_build/users_pb"
 import { ChannelCredentials, ServiceError } from "@grpc/grpc-js"
-import { response } from "express"
 
 export class UsersService {
   private static ADDRESS = "users:9001"

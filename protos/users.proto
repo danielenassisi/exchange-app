@@ -31,19 +31,22 @@ message LoginResponse {
 }
 
 message DepositRequest {
-  double value = 1;
-  string symbol = 2;
+  string userId = 1;
+  double value = 2;
+  string symbol = 3;
 }
 
 message WithdrawRequest {
-  double value = 1;
-  string symbol = 2;
+  string userId = 1;
+  double value = 2;
+  string symbol = 3;
 }
 
 message BuyRequest {
-  string from_symbol = 1;
-  double value = 2;
-  string to_symbol = 3;
+  string userId = 1;
+  string from_symbol = 2;
+  double value = 3;
+  string to_symbol = 4;
 }
 
 
@@ -55,8 +58,9 @@ message Transaction {
 }
 
 message ListTransactionsRequest {
-  repeated string date = 1;
-  repeated string currency = 2;
+  string userId = 1;
+  repeated string date = 2;
+  repeated string currency = 3;
 }
 
 message ListTransactionsResponse {

@@ -135,6 +135,9 @@ export namespace LoginResponse {
 }
 
 export class DepositRequest extends jspb.Message { 
+    getUserid(): string;
+    setUserid(value: string): DepositRequest;
+
     getValue(): number;
     setValue(value: number): DepositRequest;
 
@@ -154,12 +157,16 @@ export class DepositRequest extends jspb.Message {
 
 export namespace DepositRequest {
     export type AsObject = {
+        userid: string,
         value: number,
         symbol: string,
     }
 }
 
 export class WithdrawRequest extends jspb.Message { 
+    getUserid(): string;
+    setUserid(value: string): WithdrawRequest;
+
     getValue(): number;
     setValue(value: number): WithdrawRequest;
 
@@ -179,12 +186,16 @@ export class WithdrawRequest extends jspb.Message {
 
 export namespace WithdrawRequest {
     export type AsObject = {
+        userid: string,
         value: number,
         symbol: string,
     }
 }
 
 export class BuyRequest extends jspb.Message { 
+    getUserid(): string;
+    setUserid(value: string): BuyRequest;
+
     getFromSymbol(): string;
     setFromSymbol(value: string): BuyRequest;
 
@@ -207,6 +218,7 @@ export class BuyRequest extends jspb.Message {
 
 export namespace BuyRequest {
     export type AsObject = {
+        userid: string,
         fromSymbol: string,
         value: number,
         toSymbol: string,
@@ -247,6 +259,9 @@ export namespace Transaction {
 }
 
 export class ListTransactionsRequest extends jspb.Message { 
+    getUserid(): string;
+    setUserid(value: string): ListTransactionsRequest;
+
     clearDateList(): void;
     getDateList(): Array<string>;
     setDateList(value: Array<string>): ListTransactionsRequest;
@@ -270,6 +285,7 @@ export class ListTransactionsRequest extends jspb.Message {
 
 export namespace ListTransactionsRequest {
     export type AsObject = {
+        userid: string,
         dateList: Array<string>,
         currencyList: Array<string>,
     }

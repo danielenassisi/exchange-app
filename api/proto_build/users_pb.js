@@ -1109,8 +1109,9 @@ proto.users.DepositRequest.prototype.toObject = function(opt_includeInstance) {
  */
 proto.users.DepositRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    value: jspb.Message.getFloatingPointFieldWithDefault(msg, 1, 0.0),
-    symbol: jspb.Message.getFieldWithDefault(msg, 2, "")
+    userid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    value: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0),
+    symbol: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -1148,10 +1149,14 @@ proto.users.DepositRequest.deserializeBinaryFromReader = function(msg, reader) {
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUserid(value);
+      break;
+    case 2:
       var value = /** @type {number} */ (reader.readDouble());
       msg.setValue(value);
       break;
-    case 2:
+    case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setSymbol(value);
       break;
@@ -1184,17 +1189,24 @@ proto.users.DepositRequest.prototype.serializeBinary = function() {
  */
 proto.users.DepositRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getUserid();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
   f = message.getValue();
   if (f !== 0.0) {
     writer.writeDouble(
-      1,
+      2,
       f
     );
   }
   f = message.getSymbol();
   if (f.length > 0) {
     writer.writeString(
-      2,
+      3,
       f
     );
   }
@@ -1202,11 +1214,29 @@ proto.users.DepositRequest.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional double value = 1;
+ * optional string userId = 1;
+ * @return {string}
+ */
+proto.users.DepositRequest.prototype.getUserid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.users.DepositRequest} returns this
+ */
+proto.users.DepositRequest.prototype.setUserid = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional double value = 2;
  * @return {number}
  */
 proto.users.DepositRequest.prototype.getValue = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 1, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 2, 0.0));
 };
 
 
@@ -1215,16 +1245,16 @@ proto.users.DepositRequest.prototype.getValue = function() {
  * @return {!proto.users.DepositRequest} returns this
  */
 proto.users.DepositRequest.prototype.setValue = function(value) {
-  return jspb.Message.setProto3FloatField(this, 1, value);
+  return jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
 /**
- * optional string symbol = 2;
+ * optional string symbol = 3;
  * @return {string}
  */
 proto.users.DepositRequest.prototype.getSymbol = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -1233,7 +1263,7 @@ proto.users.DepositRequest.prototype.getSymbol = function() {
  * @return {!proto.users.DepositRequest} returns this
  */
 proto.users.DepositRequest.prototype.setSymbol = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -1269,8 +1299,9 @@ proto.users.WithdrawRequest.prototype.toObject = function(opt_includeInstance) {
  */
 proto.users.WithdrawRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    value: jspb.Message.getFloatingPointFieldWithDefault(msg, 1, 0.0),
-    symbol: jspb.Message.getFieldWithDefault(msg, 2, "")
+    userid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    value: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0),
+    symbol: jspb.Message.getFieldWithDefault(msg, 3, "")
   };
 
   if (includeInstance) {
@@ -1308,10 +1339,14 @@ proto.users.WithdrawRequest.deserializeBinaryFromReader = function(msg, reader) 
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUserid(value);
+      break;
+    case 2:
       var value = /** @type {number} */ (reader.readDouble());
       msg.setValue(value);
       break;
-    case 2:
+    case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.setSymbol(value);
       break;
@@ -1344,17 +1379,24 @@ proto.users.WithdrawRequest.prototype.serializeBinary = function() {
  */
 proto.users.WithdrawRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getUserid();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
   f = message.getValue();
   if (f !== 0.0) {
     writer.writeDouble(
-      1,
+      2,
       f
     );
   }
   f = message.getSymbol();
   if (f.length > 0) {
     writer.writeString(
-      2,
+      3,
       f
     );
   }
@@ -1362,11 +1404,29 @@ proto.users.WithdrawRequest.serializeBinaryToWriter = function(message, writer) 
 
 
 /**
- * optional double value = 1;
+ * optional string userId = 1;
+ * @return {string}
+ */
+proto.users.WithdrawRequest.prototype.getUserid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.users.WithdrawRequest} returns this
+ */
+proto.users.WithdrawRequest.prototype.setUserid = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * optional double value = 2;
  * @return {number}
  */
 proto.users.WithdrawRequest.prototype.getValue = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 1, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 2, 0.0));
 };
 
 
@@ -1375,16 +1435,16 @@ proto.users.WithdrawRequest.prototype.getValue = function() {
  * @return {!proto.users.WithdrawRequest} returns this
  */
 proto.users.WithdrawRequest.prototype.setValue = function(value) {
-  return jspb.Message.setProto3FloatField(this, 1, value);
+  return jspb.Message.setProto3FloatField(this, 2, value);
 };
 
 
 /**
- * optional string symbol = 2;
+ * optional string symbol = 3;
  * @return {string}
  */
 proto.users.WithdrawRequest.prototype.getSymbol = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
 
@@ -1393,7 +1453,7 @@ proto.users.WithdrawRequest.prototype.getSymbol = function() {
  * @return {!proto.users.WithdrawRequest} returns this
  */
 proto.users.WithdrawRequest.prototype.setSymbol = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
@@ -1429,9 +1489,10 @@ proto.users.BuyRequest.prototype.toObject = function(opt_includeInstance) {
  */
 proto.users.BuyRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    fromSymbol: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    value: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0),
-    toSymbol: jspb.Message.getFieldWithDefault(msg, 3, "")
+    userid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    fromSymbol: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    value: jspb.Message.getFloatingPointFieldWithDefault(msg, 3, 0.0),
+    toSymbol: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
   if (includeInstance) {
@@ -1470,13 +1531,17 @@ proto.users.BuyRequest.deserializeBinaryFromReader = function(msg, reader) {
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.setFromSymbol(value);
+      msg.setUserid(value);
       break;
     case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setFromSymbol(value);
+      break;
+    case 3:
       var value = /** @type {number} */ (reader.readDouble());
       msg.setValue(value);
       break;
-    case 3:
+    case 4:
       var value = /** @type {string} */ (reader.readString());
       msg.setToSymbol(value);
       break;
@@ -1509,24 +1574,31 @@ proto.users.BuyRequest.prototype.serializeBinary = function() {
  */
 proto.users.BuyRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getFromSymbol();
+  f = message.getUserid();
   if (f.length > 0) {
     writer.writeString(
       1,
       f
     );
   }
+  f = message.getFromSymbol();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
   f = message.getValue();
   if (f !== 0.0) {
     writer.writeDouble(
-      2,
+      3,
       f
     );
   }
   f = message.getToSymbol();
   if (f.length > 0) {
     writer.writeString(
-      3,
+      4,
       f
     );
   }
@@ -1534,10 +1606,10 @@ proto.users.BuyRequest.serializeBinaryToWriter = function(message, writer) {
 
 
 /**
- * optional string from_symbol = 1;
+ * optional string userId = 1;
  * @return {string}
  */
-proto.users.BuyRequest.prototype.getFromSymbol = function() {
+proto.users.BuyRequest.prototype.getUserid = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
@@ -1546,17 +1618,35 @@ proto.users.BuyRequest.prototype.getFromSymbol = function() {
  * @param {string} value
  * @return {!proto.users.BuyRequest} returns this
  */
-proto.users.BuyRequest.prototype.setFromSymbol = function(value) {
+proto.users.BuyRequest.prototype.setUserid = function(value) {
   return jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * optional double value = 2;
+ * optional string from_symbol = 2;
+ * @return {string}
+ */
+proto.users.BuyRequest.prototype.getFromSymbol = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.users.BuyRequest} returns this
+ */
+proto.users.BuyRequest.prototype.setFromSymbol = function(value) {
+  return jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional double value = 3;
  * @return {number}
  */
 proto.users.BuyRequest.prototype.getValue = function() {
-  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 2, 0.0));
+  return /** @type {number} */ (jspb.Message.getFloatingPointFieldWithDefault(this, 3, 0.0));
 };
 
 
@@ -1565,16 +1655,16 @@ proto.users.BuyRequest.prototype.getValue = function() {
  * @return {!proto.users.BuyRequest} returns this
  */
 proto.users.BuyRequest.prototype.setValue = function(value) {
-  return jspb.Message.setProto3FloatField(this, 2, value);
+  return jspb.Message.setProto3FloatField(this, 3, value);
 };
 
 
 /**
- * optional string to_symbol = 3;
+ * optional string to_symbol = 4;
  * @return {string}
  */
 proto.users.BuyRequest.prototype.getToSymbol = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
 
@@ -1583,7 +1673,7 @@ proto.users.BuyRequest.prototype.getToSymbol = function() {
  * @return {!proto.users.BuyRequest} returns this
  */
 proto.users.BuyRequest.prototype.setToSymbol = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
@@ -1813,7 +1903,7 @@ proto.users.Transaction.prototype.setDate = function(value) {
  * @private {!Array<number>}
  * @const
  */
-proto.users.ListTransactionsRequest.repeatedFields_ = [1,2];
+proto.users.ListTransactionsRequest.repeatedFields_ = [2,3];
 
 
 
@@ -1846,8 +1936,9 @@ proto.users.ListTransactionsRequest.prototype.toObject = function(opt_includeIns
  */
 proto.users.ListTransactionsRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    dateList: (f = jspb.Message.getRepeatedField(msg, 1)) == null ? undefined : f,
-    currencyList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f
+    userid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    dateList: (f = jspb.Message.getRepeatedField(msg, 2)) == null ? undefined : f,
+    currencyList: (f = jspb.Message.getRepeatedField(msg, 3)) == null ? undefined : f
   };
 
   if (includeInstance) {
@@ -1886,9 +1977,13 @@ proto.users.ListTransactionsRequest.deserializeBinaryFromReader = function(msg, 
     switch (field) {
     case 1:
       var value = /** @type {string} */ (reader.readString());
-      msg.addDate(value);
+      msg.setUserid(value);
       break;
     case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addDate(value);
+      break;
+    case 3:
       var value = /** @type {string} */ (reader.readString());
       msg.addCurrency(value);
       break;
@@ -1921,17 +2016,24 @@ proto.users.ListTransactionsRequest.prototype.serializeBinary = function() {
  */
 proto.users.ListTransactionsRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
+  f = message.getUserid();
+  if (f.length > 0) {
+    writer.writeString(
+      1,
+      f
+    );
+  }
   f = message.getDateList();
   if (f.length > 0) {
     writer.writeRepeatedString(
-      1,
+      2,
       f
     );
   }
   f = message.getCurrencyList();
   if (f.length > 0) {
     writer.writeRepeatedString(
-      2,
+      3,
       f
     );
   }
@@ -1939,11 +2041,29 @@ proto.users.ListTransactionsRequest.serializeBinaryToWriter = function(message, 
 
 
 /**
- * repeated string date = 1;
+ * optional string userId = 1;
+ * @return {string}
+ */
+proto.users.ListTransactionsRequest.prototype.getUserid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.users.ListTransactionsRequest} returns this
+ */
+proto.users.ListTransactionsRequest.prototype.setUserid = function(value) {
+  return jspb.Message.setProto3StringField(this, 1, value);
+};
+
+
+/**
+ * repeated string date = 2;
  * @return {!Array<string>}
  */
 proto.users.ListTransactionsRequest.prototype.getDateList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 1));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
@@ -1952,7 +2072,7 @@ proto.users.ListTransactionsRequest.prototype.getDateList = function() {
  * @return {!proto.users.ListTransactionsRequest} returns this
  */
 proto.users.ListTransactionsRequest.prototype.setDateList = function(value) {
-  return jspb.Message.setField(this, 1, value || []);
+  return jspb.Message.setField(this, 2, value || []);
 };
 
 
@@ -1962,7 +2082,7 @@ proto.users.ListTransactionsRequest.prototype.setDateList = function(value) {
  * @return {!proto.users.ListTransactionsRequest} returns this
  */
 proto.users.ListTransactionsRequest.prototype.addDate = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 1, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 2, value, opt_index);
 };
 
 
@@ -1976,11 +2096,11 @@ proto.users.ListTransactionsRequest.prototype.clearDateList = function() {
 
 
 /**
- * repeated string currency = 2;
+ * repeated string currency = 3;
  * @return {!Array<string>}
  */
 proto.users.ListTransactionsRequest.prototype.getCurrencyList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 2));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 3));
 };
 
 
@@ -1989,7 +2109,7 @@ proto.users.ListTransactionsRequest.prototype.getCurrencyList = function() {
  * @return {!proto.users.ListTransactionsRequest} returns this
  */
 proto.users.ListTransactionsRequest.prototype.setCurrencyList = function(value) {
-  return jspb.Message.setField(this, 2, value || []);
+  return jspb.Message.setField(this, 3, value || []);
 };
 
 
@@ -1999,7 +2119,7 @@ proto.users.ListTransactionsRequest.prototype.setCurrencyList = function(value) 
  * @return {!proto.users.ListTransactionsRequest} returns this
  */
 proto.users.ListTransactionsRequest.prototype.addCurrency = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 2, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 3, value, opt_index);
 };
 
 
