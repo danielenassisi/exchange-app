@@ -125,8 +125,8 @@ export class DepositRequest extends jspb.Message {
     setUserid(value: string): DepositRequest;
     getValue(): number;
     setValue(value: number): DepositRequest;
-    getSymbol(): string;
-    setSymbol(value: string): DepositRequest;
+    getSymbol(): Symbol;
+    setSymbol(value: Symbol): DepositRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): DepositRequest.AsObject;
@@ -142,7 +142,7 @@ export namespace DepositRequest {
     export type AsObject = {
         userid: string,
         value: number,
-        symbol: string,
+        symbol: Symbol,
     }
 }
 
@@ -151,8 +151,8 @@ export class WithdrawRequest extends jspb.Message {
     setUserid(value: string): WithdrawRequest;
     getValue(): number;
     setValue(value: number): WithdrawRequest;
-    getSymbol(): string;
-    setSymbol(value: string): WithdrawRequest;
+    getSymbol(): Symbol;
+    setSymbol(value: Symbol): WithdrawRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): WithdrawRequest.AsObject;
@@ -168,19 +168,19 @@ export namespace WithdrawRequest {
     export type AsObject = {
         userid: string,
         value: number,
-        symbol: string,
+        symbol: Symbol,
     }
 }
 
 export class BuyRequest extends jspb.Message { 
     getUserid(): string;
     setUserid(value: string): BuyRequest;
-    getFromSymbol(): string;
-    setFromSymbol(value: string): BuyRequest;
+    getFromSymbol(): Symbol;
+    setFromSymbol(value: Symbol): BuyRequest;
     getValue(): number;
     setValue(value: number): BuyRequest;
-    getToSymbol(): string;
-    setToSymbol(value: string): BuyRequest;
+    getToSymbol(): Symbol;
+    setToSymbol(value: Symbol): BuyRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): BuyRequest.AsObject;
@@ -195,9 +195,9 @@ export class BuyRequest extends jspb.Message {
 export namespace BuyRequest {
     export type AsObject = {
         userid: string,
-        fromSymbol: string,
+        fromSymbol: Symbol,
         value: number,
-        toSymbol: string,
+        toSymbol: Symbol,
     }
 }
 
@@ -206,8 +206,8 @@ export class Transaction extends jspb.Message {
     setId(value: string): Transaction;
     getValue(): number;
     setValue(value: number): Transaction;
-    getSymbol(): string;
-    setSymbol(value: string): Transaction;
+    getSymbol(): Symbol;
+    setSymbol(value: Symbol): Transaction;
     getDate(): string;
     setDate(value: string): Transaction;
 
@@ -225,7 +225,7 @@ export namespace Transaction {
     export type AsObject = {
         id: string,
         value: number,
-        symbol: string,
+        symbol: Symbol,
         date: string,
     }
 }
@@ -280,4 +280,9 @@ export namespace ListTransactionsResponse {
     export type AsObject = {
         transactionsList: Array<Transaction.AsObject>,
     }
+}
+
+export enum Symbol {
+    EUR = 0,
+    USD = 1,
 }

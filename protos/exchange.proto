@@ -5,8 +5,13 @@ package exchange;
 
 message ExchangeRequest {
   double value = 1;
-  string from = 2;
-  string to = 3;
+  enum Symbol {
+    EUR = 0;
+    USD = 1;
+  }
+
+  Symbol from = 2;
+  Symbol to = 3;
 }
 
 message ExchangeResponse {

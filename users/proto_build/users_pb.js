@@ -23,6 +23,7 @@ goog.exportSymbol('proto.users.ListTransactionsResponse', null, global);
 goog.exportSymbol('proto.users.LoginRequest', null, global);
 goog.exportSymbol('proto.users.LoginResponse', null, global);
 goog.exportSymbol('proto.users.SignupRequest', null, global);
+goog.exportSymbol('proto.users.Symbol', null, global);
 goog.exportSymbol('proto.users.Transaction', null, global);
 goog.exportSymbol('proto.users.User', null, global);
 goog.exportSymbol('proto.users.WithdrawRequest', null, global);
@@ -1111,7 +1112,7 @@ proto.users.DepositRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     userid: jspb.Message.getFieldWithDefault(msg, 1, ""),
     value: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0),
-    symbol: jspb.Message.getFieldWithDefault(msg, 3, "")
+    symbol: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -1157,7 +1158,7 @@ proto.users.DepositRequest.deserializeBinaryFromReader = function(msg, reader) {
       msg.setValue(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {!proto.users.Symbol} */ (reader.readEnum());
       msg.setSymbol(value);
       break;
     default:
@@ -1204,8 +1205,8 @@ proto.users.DepositRequest.serializeBinaryToWriter = function(message, writer) {
     );
   }
   f = message.getSymbol();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f !== 0.0) {
+    writer.writeEnum(
       3,
       f
     );
@@ -1250,20 +1251,20 @@ proto.users.DepositRequest.prototype.setValue = function(value) {
 
 
 /**
- * optional string symbol = 3;
- * @return {string}
+ * optional Symbol symbol = 3;
+ * @return {!proto.users.Symbol}
  */
 proto.users.DepositRequest.prototype.getSymbol = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {!proto.users.Symbol} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
 
 /**
- * @param {string} value
+ * @param {!proto.users.Symbol} value
  * @return {!proto.users.DepositRequest} returns this
  */
 proto.users.DepositRequest.prototype.setSymbol = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -1301,7 +1302,7 @@ proto.users.WithdrawRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     userid: jspb.Message.getFieldWithDefault(msg, 1, ""),
     value: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0),
-    symbol: jspb.Message.getFieldWithDefault(msg, 3, "")
+    symbol: jspb.Message.getFieldWithDefault(msg, 3, 0)
   };
 
   if (includeInstance) {
@@ -1347,7 +1348,7 @@ proto.users.WithdrawRequest.deserializeBinaryFromReader = function(msg, reader) 
       msg.setValue(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {!proto.users.Symbol} */ (reader.readEnum());
       msg.setSymbol(value);
       break;
     default:
@@ -1394,8 +1395,8 @@ proto.users.WithdrawRequest.serializeBinaryToWriter = function(message, writer) 
     );
   }
   f = message.getSymbol();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f !== 0.0) {
+    writer.writeEnum(
       3,
       f
     );
@@ -1440,20 +1441,20 @@ proto.users.WithdrawRequest.prototype.setValue = function(value) {
 
 
 /**
- * optional string symbol = 3;
- * @return {string}
+ * optional Symbol symbol = 3;
+ * @return {!proto.users.Symbol}
  */
 proto.users.WithdrawRequest.prototype.getSymbol = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {!proto.users.Symbol} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
 
 /**
- * @param {string} value
+ * @param {!proto.users.Symbol} value
  * @return {!proto.users.WithdrawRequest} returns this
  */
 proto.users.WithdrawRequest.prototype.setSymbol = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -1490,9 +1491,9 @@ proto.users.BuyRequest.prototype.toObject = function(opt_includeInstance) {
 proto.users.BuyRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     userid: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    fromSymbol: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    fromSymbol: jspb.Message.getFieldWithDefault(msg, 2, 0),
     value: jspb.Message.getFloatingPointFieldWithDefault(msg, 3, 0.0),
-    toSymbol: jspb.Message.getFieldWithDefault(msg, 4, "")
+    toSymbol: jspb.Message.getFieldWithDefault(msg, 4, 0)
   };
 
   if (includeInstance) {
@@ -1534,7 +1535,7 @@ proto.users.BuyRequest.deserializeBinaryFromReader = function(msg, reader) {
       msg.setUserid(value);
       break;
     case 2:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {!proto.users.Symbol} */ (reader.readEnum());
       msg.setFromSymbol(value);
       break;
     case 3:
@@ -1542,7 +1543,7 @@ proto.users.BuyRequest.deserializeBinaryFromReader = function(msg, reader) {
       msg.setValue(value);
       break;
     case 4:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {!proto.users.Symbol} */ (reader.readEnum());
       msg.setToSymbol(value);
       break;
     default:
@@ -1582,8 +1583,8 @@ proto.users.BuyRequest.serializeBinaryToWriter = function(message, writer) {
     );
   }
   f = message.getFromSymbol();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f !== 0.0) {
+    writer.writeEnum(
       2,
       f
     );
@@ -1596,8 +1597,8 @@ proto.users.BuyRequest.serializeBinaryToWriter = function(message, writer) {
     );
   }
   f = message.getToSymbol();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f !== 0.0) {
+    writer.writeEnum(
       4,
       f
     );
@@ -1624,20 +1625,20 @@ proto.users.BuyRequest.prototype.setUserid = function(value) {
 
 
 /**
- * optional string from_symbol = 2;
- * @return {string}
+ * optional Symbol from_symbol = 2;
+ * @return {!proto.users.Symbol}
  */
 proto.users.BuyRequest.prototype.getFromSymbol = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+  return /** @type {!proto.users.Symbol} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
 /**
- * @param {string} value
+ * @param {!proto.users.Symbol} value
  * @return {!proto.users.BuyRequest} returns this
  */
 proto.users.BuyRequest.prototype.setFromSymbol = function(value) {
-  return jspb.Message.setProto3StringField(this, 2, value);
+  return jspb.Message.setProto3EnumField(this, 2, value);
 };
 
 
@@ -1660,20 +1661,20 @@ proto.users.BuyRequest.prototype.setValue = function(value) {
 
 
 /**
- * optional string to_symbol = 4;
- * @return {string}
+ * optional Symbol to_symbol = 4;
+ * @return {!proto.users.Symbol}
  */
 proto.users.BuyRequest.prototype.getToSymbol = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+  return /** @type {!proto.users.Symbol} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
 
 /**
- * @param {string} value
+ * @param {!proto.users.Symbol} value
  * @return {!proto.users.BuyRequest} returns this
  */
 proto.users.BuyRequest.prototype.setToSymbol = function(value) {
-  return jspb.Message.setProto3StringField(this, 4, value);
+  return jspb.Message.setProto3EnumField(this, 4, value);
 };
 
 
@@ -1711,7 +1712,7 @@ proto.users.Transaction.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     value: jspb.Message.getFloatingPointFieldWithDefault(msg, 2, 0.0),
-    symbol: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    symbol: jspb.Message.getFieldWithDefault(msg, 3, 0),
     date: jspb.Message.getFieldWithDefault(msg, 4, "")
   };
 
@@ -1758,7 +1759,7 @@ proto.users.Transaction.deserializeBinaryFromReader = function(msg, reader) {
       msg.setValue(value);
       break;
     case 3:
-      var value = /** @type {string} */ (reader.readString());
+      var value = /** @type {!proto.users.Symbol} */ (reader.readEnum());
       msg.setSymbol(value);
       break;
     case 4:
@@ -1809,8 +1810,8 @@ proto.users.Transaction.serializeBinaryToWriter = function(message, writer) {
     );
   }
   f = message.getSymbol();
-  if (f.length > 0) {
-    writer.writeString(
+  if (f !== 0.0) {
+    writer.writeEnum(
       3,
       f
     );
@@ -1862,20 +1863,20 @@ proto.users.Transaction.prototype.setValue = function(value) {
 
 
 /**
- * optional string symbol = 3;
- * @return {string}
+ * optional Symbol symbol = 3;
+ * @return {!proto.users.Symbol}
  */
 proto.users.Transaction.prototype.getSymbol = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+  return /** @type {!proto.users.Symbol} */ (jspb.Message.getFieldWithDefault(this, 3, 0));
 };
 
 
 /**
- * @param {string} value
+ * @param {!proto.users.Symbol} value
  * @return {!proto.users.Transaction} returns this
  */
 proto.users.Transaction.prototype.setSymbol = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
+  return jspb.Message.setProto3EnumField(this, 3, value);
 };
 
 
@@ -2291,5 +2292,13 @@ proto.users.ListTransactionsResponse.prototype.clearTransactionsList = function(
   return this.setTransactionsList([]);
 };
 
+
+/**
+ * @enum {number}
+ */
+proto.users.Symbol = {
+  EUR: 0,
+  USD: 1
+};
 
 goog.object.extend(exports, proto.users);

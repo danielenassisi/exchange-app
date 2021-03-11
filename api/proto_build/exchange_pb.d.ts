@@ -9,10 +9,10 @@ import * as jspb from "google-protobuf";
 export class ExchangeRequest extends jspb.Message { 
     getValue(): number;
     setValue(value: number): ExchangeRequest;
-    getFrom(): string;
-    setFrom(value: string): ExchangeRequest;
-    getTo(): string;
-    setTo(value: string): ExchangeRequest;
+    getFrom(): ExchangeRequest.Symbol;
+    setFrom(value: ExchangeRequest.Symbol): ExchangeRequest;
+    getTo(): ExchangeRequest.Symbol;
+    setTo(value: ExchangeRequest.Symbol): ExchangeRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ExchangeRequest.AsObject;
@@ -27,9 +27,15 @@ export class ExchangeRequest extends jspb.Message {
 export namespace ExchangeRequest {
     export type AsObject = {
         value: number,
-        from: string,
-        to: string,
+        from: ExchangeRequest.Symbol,
+        to: ExchangeRequest.Symbol,
     }
+
+    export enum Symbol {
+    EUR = 0,
+    USD = 1,
+    }
+
 }
 
 export class ExchangeResponse extends jspb.Message { 

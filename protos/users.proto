@@ -12,6 +12,11 @@ message User {
   string iban = 5;
 }
 
+enum Symbol {
+  EUR = 0;
+  USD = 1;
+}
+
 message SignupRequest {
   string email = 1;
   string password = 2;
@@ -33,27 +38,27 @@ message LoginResponse {
 message DepositRequest {
   string userId = 1;
   double value = 2;
-  string symbol = 3;
+  Symbol symbol = 3;
 }
 
 message WithdrawRequest {
   string userId = 1;
   double value = 2;
-  string symbol = 3;
+  Symbol symbol = 3;
 }
 
 message BuyRequest {
   string userId = 1;
-  string from_symbol = 2;
+  Symbol from_symbol = 2;
   double value = 3;
-  string to_symbol = 4;
+  Symbol to_symbol = 4;
 }
 
 
 message Transaction {
   string id = 1;
   double value = 2;
-  string symbol = 3;
+  Symbol symbol = 3;
   string date = 4;
 }
 

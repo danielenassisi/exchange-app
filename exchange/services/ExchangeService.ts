@@ -9,10 +9,11 @@ const serverImpl: IExchangeServiceServer = {
   exchange(call: ServerUnaryCall<ExchangeRequest, ExchangeResponse>, callback: sendUnaryData<ExchangeResponse>): void {
     const [from, to, value] = [call.request.getFrom(), call.request.getTo(), call.request.getValue()]
     const url = `https://api.exchangeratesapi.io/latest?base=${from}&symbols=${to}`
+
     axios.get<IEcbResponse>(url)
       .then(res => {
         const { data } = res;
-        const exchangeRate = data.rates.get(to);
+        const exchangeRate = data.rates.get(to === 0 ? "EUR" : "USD");
         
         if (!exchangeRate) {
           callback({ code: Status.NOT_FOUND })
