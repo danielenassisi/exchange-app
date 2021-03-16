@@ -5,6 +5,7 @@ import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AppToolbar() {
 
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <AppBar position="absolute">
@@ -26,8 +27,8 @@ export default function AppToolbar() {
           Exchange app
           </Typography>
         <ButtonGroup variant="text" color="inherit">
-          <Button>Login</Button>
-          <Button>Registrati</Button>
+          <Button component={Link} to="/login">Login</Button>
+          <Button component={Link} to="/register">Registrati</Button>
         </ButtonGroup>
       </Toolbar>
     </AppBar>

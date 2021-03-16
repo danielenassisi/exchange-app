@@ -125,8 +125,6 @@ const serverImpl: IUsersServiceServer = {
       })
       .then(res => res ? callback(null) : callback({ code: Status.INVALID_ARGUMENT }))
       .catch(e => callback({ code: Status.INTERNAL }))
-    
-
   },
   listTransactions(call: ServerUnaryCall<ListTransactionsRequest, ListTransactionsResponse>, callback: sendUnaryData<ListTransactionsResponse>): void { },
 }

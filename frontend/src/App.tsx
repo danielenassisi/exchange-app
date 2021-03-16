@@ -14,9 +14,10 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import AppToolbar from './components/AppToolbar';
-
-
-const drawerWidth = 240;
+import { Route, Switch, useHistory } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,14 +29,13 @@ const useStyles = makeStyles((theme) => ({
     height: '100vh',
     overflow: 'auto',
   },
-  container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
-  },
 }));
 
 export default function App() {
   const classes = useStyles();
+
+  const history = useHistory()
+  history.push('/login')
 
   return (
     <div className={classes.root}>
@@ -43,9 +43,14 @@ export default function App() {
       <AppToolbar />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-
-        </Container>
+        <Switch>
+          <Route path="/login">
+            <Login></Login>
+          </Route>
+          <Route path="/register">
+            <Register></Register>
+          </Route>
+        </Switch>
       </main>
     </div>
   );
