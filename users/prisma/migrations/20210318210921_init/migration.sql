@@ -18,7 +18,7 @@ UNIQUE INDEX `User.iban_unique`(`iban`),
 CREATE TABLE `CurrentAccount` (
     `id` VARCHAR(191) NOT NULL,
     `value` DECIMAL(65, 30) NOT NULL,
-    `symbol` VARCHAR(191) NOT NULL,
+    `symbol` ENUM('EUR', 'USD') NOT NULL,
     `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `updatedAt` DATETIME(3) NOT NULL,
     `userId` VARCHAR(191) NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE `Transaction` (
     `id` VARCHAR(191) NOT NULL,
     `date` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3),
     `value` DECIMAL(65, 30) NOT NULL,
-    `symbol` VARCHAR(191) NOT NULL,
+    `symbol` ENUM('EUR', 'USD') NOT NULL,
     `operation` ENUM('DEPOSIT', 'WITHDRAW', 'BUY_DEPOSIT', 'BUY_WITHDRAW') NOT NULL,
     `userId` VARCHAR(191) NOT NULL,
 

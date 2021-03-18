@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { Link as RouterLink } from "react-router-dom"
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined"
 import PasswordTextField from './PasswordTextField'
+import EmailTextField from './EmailTextField'
+import { useEmailValidation, usePasswordValidation } from '../hooks/useValidation'
 
 const useStyles = makeStyles(theme => ({
   avatar: {
@@ -29,6 +31,8 @@ export default function LoginForm() {
   const classes = useStyles()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const emailValidation = useEmailValidation()
+  const passwordValidation = usePasswordValidation()
 
   return (
     <div className={classes.paper}>
@@ -39,23 +43,15 @@ export default function LoginForm() {
         Login
       </Typography>
       <form className={classes.form} noValidate>
-        <TextField
-          value={email}
-          onChange={e => setEmail(e.target.value)}
-          variant="outlined"
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
-          autoFocus
-
+        <EmailTextField
+          email={email}
+          onEmailChange={setEmail}
+          validation={emailValidation}
         />
         <PasswordTextField
           password={password}
           onPasswordChange={setPassword}
+          validation={passwordValidation}
         />
         <Button
           type="submit"
@@ -73,7 +69,7 @@ export default function LoginForm() {
             </Link>
           </Grid> */}
           <Grid item>
-            <Link component={RouterLink} to="/register"variant="body2">
+            <Link component={RouterLink} to="/register" variant="body2">
               {"Non hai un account? Registrati"}
             </Link>
           </Grid>

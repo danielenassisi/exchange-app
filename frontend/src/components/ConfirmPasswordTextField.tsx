@@ -1,24 +1,24 @@
-import { createStyles, FormControl, IconButton, Input, InputAdornment, InputLabel, makeStyles, TextField, Theme } from '@material-ui/core';
-import clsx from "clsx"
+import { IconButton, InputAdornment, TextField } from '@material-ui/core';
 import React, { FC, useState } from 'react'
 import Visibility from "@material-ui/icons/Visibility"
 import VisibilityOff from "@material-ui/icons/VisibilityOff"
-import { required, minCharactersFactory, hasLowercaseCharacters, hasUppercaseCharacters, hasSpecialCharacters, hasNumbers, Predicate } from "../utils/validators"
-import { useValidation } from '../hooks/useValidation';
+import { Predicate } from "../utils/validators"
 
-interface PasswordTextFieldProps {
+interface ConfirmPasswordTextFieldProps {
   password: string,
-  onPasswordChange: React.Dispatch<React.SetStateAction<string>>,
+  confirmPassword: string,
+  onConfirmPasswordChange: React.Dispatch<React.SetStateAction<string>>,
   validation: [boolean, React.Dispatch<React.SetStateAction<boolean>>, Predicate<string>]
 }
 
-const PasswordTextField: FC<PasswordTextFieldProps> = (props) => {
+
+const ConfirmPasswordTextField: FC<ConfirmPasswordTextFieldProps> = (props) => {
 
   const [showPassword, setShowPassword] = useState(false)
   const [changed, setChanged, passwordValidator] = props.validation
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    props.onPasswordChange(event.target.value)
+    props.onConfirmPasswordChange(event.target.value)
     setChanged(true)
   }
   const handleClickShowPassword = () => setShowPassword(!showPassword)
@@ -27,17 +27,17 @@ const PasswordTextField: FC<PasswordTextFieldProps> = (props) => {
 
   return (
     <TextField
-      error={!passwordValidator(props.password) && changed}
-      value={props.password}
+      error={(!passwordValidator(props.confirmPassword) || props.password != props.confirmPassword) && changed}
+      value={props.confirmPassword}
       onChange={handleChange}
       variant="outlined"
       margin="normal"
       required
       fullWidth
-      name="password"
-      label="Password"
+      name="confirmPassword"
+      label="Conferma password"
       type={showPassword ? 'text' : 'password'}
-      id="password"
+      id="confirmPassword"
       InputProps={{
         endAdornment: (
           <InputAdornment position="end" >
@@ -51,9 +51,8 @@ const PasswordTextField: FC<PasswordTextFieldProps> = (props) => {
           </ InputAdornment>
         )
       }}
-      autoComplete="current-password"
     />
   )
 }
 
-export default PasswordTextField
+export default ConfirmPasswordTextField

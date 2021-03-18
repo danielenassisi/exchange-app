@@ -1,10 +1,10 @@
 version: "3.9"
 
 services:
-  exchange:
-    build: './exchange'
-    ports: 
-      - "9000:9000"
+  # exchange:
+  #   build: './exchange'
+  #   ports: 
+  #     - "9000:9000"
   users:
     build: './users'
     ports: 
@@ -25,12 +25,12 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-  api:
-    build: './api'
-    ports:
-      - "8000:80"
-    volumes:
-      - ./api:/app
+  # api:
+  #   build: './api'
+  #   ports:
+  #     - "8000:80"
+  #   volumes:
+  #     - ./api:/app
 volumes:
   mysql-data:
 

@@ -15,9 +15,9 @@ import ButtonGroup from '@material-ui/core/ButtonGroup';
 import Button from '@material-ui/core/Button';
 import AppToolbar from './components/AppToolbar';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const queryClient = new QueryClient()
+
 export default function App() {
   const classes = useStyles();
 
@@ -38,20 +40,23 @@ export default function App() {
   history.push('/login')
 
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <AppToolbar />
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Switch>
-          <Route path="/login">
-            <Login></Login>
-          </Route>
-          <Route path="/register">
-            <Register></Register>
-          </Route>
-        </Switch>
-      </main>
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <div className={classes.root}>
+        <CssBaseline />
+        <AppToolbar />
+        <main className={classes.content}>
+          <div className={classes.appBarSpacer} />
+          <Switch>
+            <Route path="/login">
+              <Login></Login>
+            </Route>
+            <Route path="/register">
+              <Register></Register>
+            </Route>
+          </Switch>
+        </main>
+      </div>
+    </QueryClientProvider>
+
   );
 }
