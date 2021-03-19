@@ -32,23 +32,20 @@ export const POST: Operation = (req, res, next) => {
   }
   const userService = new UsersService()
 
-  try {
-    const response = userService.login(body)
-    res.status(200).send(response)
-  } catch(err) {
-    const error = err as ServiceError
-
-    switch (error.code) {
-      case Status.INTERNAL:
-        res.status(500).send()
-        break
-      case Status.NOT_FOUND:
-        res.status(404).send()
-        break
-      case Status.INVALID_ARGUMENT:
-        res.status(400).send()
-    }
-  }
+  userService.login(body)
+    .then(loginRes => res.status(200).send(loginRes))
+    .catch((error: ServiceError) => {
+      switch (error.code) {
+        case Status.INTERNAL:
+          res.status(500).send()
+          break
+        case Status.NOT_FOUND:
+          res.status(404).send()
+          break
+        case Status.INVALID_ARGUMENT:
+          res.status(400).send()
+      }
+    })
 }
 
 POST.apiDoc = {

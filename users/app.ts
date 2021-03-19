@@ -1,9 +1,12 @@
 import { ServerCredentials } from "@grpc/grpc-js"
 import { prisma } from "./utils/prisma"
+import { config } from "dotenv"
 import makeServer from './utils/exchangeServerFactory'
 
 const HOST = "0.0.0.0"
 const PORT = 9001
+
+config()
 
 const usersGrpcServer = makeServer(HOST, PORT)
 

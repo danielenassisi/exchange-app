@@ -1,16 +1,22 @@
 version: "3.9"
 
 services:
-  # exchange:
-  #   build: './exchange'
-  #   ports: 
-  #     - "9000:9000"
+  exchange:
+    build: './exchange'
+    ports: 
+      - "9000:9000"
+    volumes:
+      - '/app/node_modules'
+      - './exchange:/app'
   users:
     build: './users'
+    env_file:
+      - './users/.env'
     ports: 
       - "9001:9001"
     volumes:
       - ./users:/app
+      - '/app/node_modules'
     tty: true
     stdin_open: true
     depends_on:
@@ -25,12 +31,24 @@ services:
       - "3306:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-  # api:
-  #   build: './api'
-  #   ports:
-  #     - "8000:80"
-  #   volumes:
-  #     - ./api:/app
+  api:
+    build: './api'
+    ports:
+      - "8000:80"
+    volumes:
+      - ./api:/app
+      - '/app/node_modules'
+  frontend:
+    build:
+      context: './frontend'
+      dockerfile: Dockerfile
+    volumes:
+      - './frontend:/app'
+      - '/app/node_modules'
+    ports:
+      - 3001:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
 volumes:
   mysql-data:
 

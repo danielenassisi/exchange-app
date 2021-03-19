@@ -47,6 +47,8 @@ export class UsersService {
         })
       })
 
+      console.log(loginRes.toObject())
+
       return loginRes.toObject()
     } catch(err) {
       throw err

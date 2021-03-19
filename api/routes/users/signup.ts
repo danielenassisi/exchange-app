@@ -1,7 +1,7 @@
 import { Operation } from "express-openapi"
 import { ISignupViewModel } from "../../models/users/signup/ISignupViewModel"
 import { UsersService } from "../../services/UsersService"
-import { hasLowercaseCharacters, hasSpecialCharacters, hasUppercaseCharacters, isEmail, minCharactersFactory } from "../../utils/validators"
+import { hasLowercaseCharacters, hasSpecialCharacters, hasUppercaseCharacters, isEmail, isIban, minCharactersFactory } from "../../utils/validators"
 
 export const parameters = [
   {
@@ -17,7 +17,7 @@ export const parameters = [
 
 export const POST: Operation = (req, res, next) => {
   const body = req.body as ISignupViewModel
-  const { email, password, confirmPassword } = body
+  const { email, password, confirmPassword, iban } = body
 
   if (
     !isEmail(email) ||
@@ -25,18 +25,14 @@ export const POST: Operation = (req, res, next) => {
     !hasUppercaseCharacters(password) ||
     !hasSpecialCharacters(password) ||
     !(minCharactersFactory(8)(password)) ||
+    !(isIban(iban)) ||
     password !== confirmPassword) {
     res.status(400).send()
   }
   const userService = new UsersService()
 
-  const result = userService.signup(body)
-
-  if (!result) {
-    res.status(500).send()
-  }
-
-  res.status(201).send()
+  userService.signup(body)
+    .then(result => result ? res.status(201).send() : res.status(500).send())
 }
 
 POST.apiDoc = {

@@ -61,7 +61,7 @@ export default function RegisterForm() {
     ibanValidation[2](iban)
   ), [name, surname, email, password, confirmPassword, iban])
 
-  const registerUserMutation = useMutation((vm: RegisterViewModel) => api.post('/users/register', vm), {
+  const registerUserMutation = useMutation((vm: RegisterViewModel) => api.post('/users/signup', vm), {
     onSuccess: () => history.push('/login'),
     onError: () => setOpen(true)
   })

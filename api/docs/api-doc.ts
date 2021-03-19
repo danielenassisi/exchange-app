@@ -8,6 +8,25 @@ export const apiDoc = {
     version: '1.0.0'
   },
   definitions: {
+    User: {
+      properties: {
+        id: {
+          type: "string",
+        },
+        name: {
+          type: "string"
+        },
+        surname: {
+          type: "string"
+        },
+        email: {
+          type: "string"
+        },
+        iban: {
+          type: "string"
+        }
+      }
+    },
     Error: {
       additionalProperties: true
     },
@@ -47,36 +66,14 @@ export const apiDoc = {
     },
     LoginDto: {
       properties: {
-        email: {
+        jwt: {
           type: 'string',
         },
         user: {
-          type: 'object',
-          schema: {
-            $ref: "#/definitions/User"
-          }
+          $ref: "#/definitions/User"
         },
       },
     },
-    User: {
-      properties: {
-        id: {
-          type: "string",
-        },
-        name: {
-          type: "string"
-        },
-        surname: {
-          type: "string"
-        },
-        email: {
-          type: "string"
-        },
-        iban: {
-          type: "string"
-        }
-      }
-    }
   },
   paths: {},
 }

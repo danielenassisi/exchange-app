@@ -8,8 +8,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const useStyles = makeStyles((theme) => ({
-  toolbar: {
-    paddingRight: 24, // keep right padding when drawer closed
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
   },
   title: {
     flexGrow: 1,
@@ -21,11 +21,14 @@ export default function AppToolbar() {
   const classes = useStyles()
 
   return (
-    <AppBar position="absolute">
-      <Toolbar className={classes.toolbar}>
+    <AppBar position="fixed" className={classes.appBar}>
+      <Toolbar>
         <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
           Exchange app
-          </Typography>
+        </Typography>
+        {
+          
+        }
         <ButtonGroup variant="text" color="inherit">
           <Button component={Link} to="/login">Login</Button>
           <Button component={Link} to="/register">Registrati</Button>

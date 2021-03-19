@@ -1,4 +1,5 @@
 import * as express from "express"
+import * as cors from "cors"
 import { json } from "body-parser"
 import { initialize } from "express-openapi"
 import { apiDoc } from "./docs/api-doc"
@@ -7,6 +8,7 @@ import { UsersService } from "./services/UsersService"
 const app = express()
 
 app.use(json())
+app.use(cors())
 
 initialize({
   apiDoc,
