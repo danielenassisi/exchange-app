@@ -120,6 +120,26 @@ export namespace LoginResponse {
     }
 }
 
+export class MeRequest extends jspb.Message { 
+    getToken(): string;
+    setToken(value: string): MeRequest;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): MeRequest.AsObject;
+    static toObject(includeInstance: boolean, msg: MeRequest): MeRequest.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: MeRequest, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): MeRequest;
+    static deserializeBinaryFromReader(message: MeRequest, reader: jspb.BinaryReader): MeRequest;
+}
+
+export namespace MeRequest {
+    export type AsObject = {
+        token: string,
+    }
+}
+
 export class DepositRequest extends jspb.Message { 
     getUserid(): string;
     setUserid(value: string): DepositRequest;
@@ -179,8 +199,6 @@ export class BuyRequest extends jspb.Message {
     setFromSymbol(value: Symbol): BuyRequest;
     getValue(): number;
     setValue(value: number): BuyRequest;
-    getToSymbol(): Symbol;
-    setToSymbol(value: Symbol): BuyRequest;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): BuyRequest.AsObject;
@@ -196,6 +214,28 @@ export namespace BuyRequest {
     export type AsObject = {
         userid: string,
         fromSymbol: Symbol,
+        value: number,
+    }
+}
+
+export class BuyResponse extends jspb.Message { 
+    getValue(): number;
+    setValue(value: number): BuyResponse;
+    getToSymbol(): Symbol;
+    setToSymbol(value: Symbol): BuyResponse;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): BuyResponse.AsObject;
+    static toObject(includeInstance: boolean, msg: BuyResponse): BuyResponse.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: BuyResponse, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): BuyResponse;
+    static deserializeBinaryFromReader(message: BuyResponse, reader: jspb.BinaryReader): BuyResponse;
+}
+
+export namespace BuyResponse {
+    export type AsObject = {
         value: number,
         toSymbol: Symbol,
     }

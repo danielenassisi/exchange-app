@@ -66,7 +66,7 @@ export const apiDoc = {
     },
     LoginDto: {
       properties: {
-        jwt: {
+        token: {
           type: 'string',
         },
         user: {
@@ -74,6 +74,52 @@ export const apiDoc = {
         },
       },
     },
+    DepositViewModel: {
+      properties: {
+        value: {
+          type: 'number',
+          minimum: 0,
+        },
+        symbol: {
+          type: 'string'
+        }
+      },
+      required: ['value', 'symbol']
+    },
+    WithdrawViewModel: {
+      properties: {
+        value: {
+          type: 'number',
+          minimum: 0,
+        },
+        symbol: {
+          type: 'string'
+        }
+      },
+      required: ['value', 'symbol']
+    },
+    BuyViewModel: {
+      properties: {
+        value: {
+          type: 'number',
+          minimum: 0,
+        },
+        symbol: {
+          type: 'string'
+        }
+      },
+      required: ['value', 'symbol']
+    },
+    BuyDto: {
+      properties: {
+        value: {
+          type: 'number'
+        },
+        symbol: {
+          type: 'string'
+        }
+      }
+    }
   },
   paths: {},
 }

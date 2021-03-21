@@ -2,7 +2,9 @@ import { prisma } from "../utils/prisma"
 import IDepositRequest from "../models/IDepositRequest"
 import IWithdrawRequest from "../models/IWithdrawRequest"
 import IBuyRequest from "../models/IBuyRequest"
-import { Operation } from "@prisma/client"
+import { CurrencySymbol, Operation } from "@prisma/client"
+import { ServiceError } from "@grpc/grpc-js"
+import { Status } from "@grpc/grpc-js/build/src/constants"
 
 
 
@@ -50,7 +52,7 @@ export async function createDeposit({ userId, symbol, value }: IDepositRequest):
     }
     return true
   } catch(e) {
-    throw e
+    throw { code: Status.INTERNAL } as ServiceError
   }
 }
 
@@ -64,7 +66,7 @@ export async function createWithdraw({ userId, symbol, value }: IWithdrawRequest
     })
 
     if (!currentAccount) {
-      return false
+      throw { code: Status.NOT_FOUND } as ServiceError
     }
 
     const createTransaction = prisma.transaction.create({
@@ -89,12 +91,14 @@ export async function createWithdraw({ userId, symbol, value }: IWithdrawRequest
 
     return true
   } catch(e) {
-    throw e
+    throw { code: Status.INTERNAL } as ServiceError
   }
 }
 
-export async function createBuy({ userId, value, fromSymbol, toSymbol }: IBuyRequest, convertedValue: number) {
+export async function createBuy({ userId, value, fromSymbol }: IBuyRequest, convertedValue: number) {
   try {
+    const toSymbol = fromSymbol == CurrencySymbol.EUR ? CurrencySymbol.USD : CurrencySymbol.EUR
+
     const currentAccount = await prisma.currentAccount.findFirst({
       where: {
         userId,
@@ -103,11 +107,12 @@ export async function createBuy({ userId, value, fromSymbol, toSymbol }: IBuyReq
     })
 
     if (!currentAccount) {
-      return false
+      throw { code: Status.NOT_FOUND } as ServiceError
     }
 
     if (currentAccount.value.lt(value)) {
-      return false
+      console.log("EHI")
+      throw { code: Status.INVALID_ARGUMENT } as ServiceError
     }
 
     const createWithdrawTransaction = prisma.transaction.create({

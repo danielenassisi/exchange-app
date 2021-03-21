@@ -1,8 +1,12 @@
 import { ISignupViewModel } from "../models/users/signup/ISignupViewModel"
 import { ILoginViewModel } from "../models/users/login/ILoginViewModel"
 import { UsersServiceClient } from "../proto_build/users_grpc_pb"
-import { SignupRequest, LoginRequest, LoginResponse } from "../proto_build/users_pb"
+import { SignupRequest, LoginRequest, LoginResponse, MeRequest, User, DepositRequest, Symbol, WithdrawRequest, BuyRequest, BuyResponse } from "../proto_build/users_pb"
 import { ChannelCredentials, ServiceError } from "@grpc/grpc-js"
+import { response } from "express"
+import { IDepositViewModel } from "../models/transactions/deposit/IDepositViewModel"
+import { IWithdrawViewModel } from "../models/transactions/withdraw/IWithdrawViewModel"
+import { IBuyViewModel } from "../models/transactions/buy/IBuyViewModel"
 
 export class UsersService {
   private static ADDRESS = "users:9001"
@@ -52,6 +56,90 @@ export class UsersService {
       return loginRes.toObject()
     } catch(err) {
       throw err
+    }
+  }
+
+  async me(token: string) {
+    const request = new MeRequest()
+
+    request.setToken(token)
+
+    try {
+      const user: User = await new Promise((resolve, reject) => {
+        UsersService.client.me(request, (error, response) => {
+          if (error) reject(error)
+          else resolve(response)
+        })
+      })
+
+      return user.toObject()
+    } catch(err) {
+      throw err
+    }
+  }
+
+  async deposit(depositViewModel: IDepositViewModel, userId: string) {
+    const request = new DepositRequest()
+
+    request.setUserid(userId)
+    request.setValue(depositViewModel.value)
+    request.setSymbol(depositViewModel.symbol == "EUR" ? Symbol.EUR : Symbol.USD)
+
+    try {
+      const deposit = await new Promise((resolve, reject) => {
+        UsersService.client.deposit(request, (error, res) => {
+          if (error) reject(error)
+          else resolve(res)
+        })
+      })
+    } catch(err) {
+      throw err as ServiceError
+    }
+
+    return true
+  }
+
+  async withdraw(withdrawViewModel: IWithdrawViewModel, userId: string) {
+    const request = new WithdrawRequest()
+
+    request.setUserid(userId)
+    request.setValue(withdrawViewModel.value)
+    request.setSymbol(withdrawViewModel.symbol == "EUR" ? Symbol.EUR : Symbol.USD)
+
+    try {
+      const withdraw = await new Promise((resolve, reject) => {
+        UsersService.client.withdraw(request, (error, res) => {
+          if (error) reject(error)
+          else resolve(res)
+        })
+      })
+    } catch(e) {
+      throw e as ServiceError
+    }
+
+    return true
+  }
+
+  async buy(buyViewModel: IBuyViewModel, userId: string) {
+    const request = new BuyRequest()
+
+    request.setUserid(userId)
+    request.setValue(buyViewModel.value)
+    request.setFromSymbol(buyViewModel.symbol == "EUR" ? Symbol.EUR : Symbol.USD)
+
+    try {
+      const buy: BuyResponse = await new Promise((resolve, reject) => {
+        UsersService.client.buy(request, (error, res) => {
+          if (error) reject(error)
+          else resolve(res)
+        })
+      })
+
+      console.log(buy.toObject())
+
+      return buy.toObject()
+    } catch(e) {
+      throw e as ServiceError
     }
   }
 }

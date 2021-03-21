@@ -22,7 +22,7 @@ async function main() {
 }
 
 main()
-  .catch(e => {throw e})
+  .catch(e => {console.log(e)})
   .finally(async () => {
     await prisma.$disconnect()
   })

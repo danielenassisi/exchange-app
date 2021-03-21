@@ -4,17 +4,20 @@ import { ServerUnaryCall, sendUnaryData } from "@grpc/grpc-js"
 import IEcbResponse from '../models/IEcbResponse'
 import axios from "axios"
 import { Status } from '@grpc/grpc-js/build/src/constants'
+import { Symbol } from '../proto_build/users_pb'
 
 const serverImpl: IExchangeServiceServer = {
   exchange(call: ServerUnaryCall<ExchangeRequest, ExchangeResponse>, callback: sendUnaryData<ExchangeResponse>): void {
     const [from, to, value] = [call.request.getFrom(), call.request.getTo(), call.request.getValue()]
-    const url = `https://api.exchangeratesapi.io/latest?base=${from}&symbols=${to}`
+    const fromString = from == Symbol.EUR ? "EUR": "USD"
+    const toString = to == Symbol.USD ? "USD": "EUR" 
+    const url = `https://api.exchangeratesapi.io/latest?base=${fromString}&symbols=${toString}`
 
     axios.get<IEcbResponse>(url)
       .then(res => {
+        console.log(res)
         const { data } = res;
-        const exchangeRate = data.rates.get(to === 0 ? "EUR" : "USD");
-        
+        const exchangeRate = data.rates[toString];
         if (!exchangeRate) {
           callback({ code: Status.NOT_FOUND })
         }

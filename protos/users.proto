@@ -35,6 +35,10 @@ message LoginResponse {
   User user = 2;
 }
 
+message MeRequest {
+  string token = 1;
+}
+
 message DepositRequest {
   string userId = 1;
   double value = 2;
@@ -51,7 +55,11 @@ message BuyRequest {
   string userId = 1;
   Symbol from_symbol = 2;
   double value = 3;
-  Symbol to_symbol = 4;
+}
+
+message BuyResponse {
+  double value = 1;
+  Symbol to_symbol = 2;
 }
 
 
@@ -75,8 +83,9 @@ message ListTransactionsResponse {
 service UsersService {
   rpc Signup(SignupRequest) returns (google.protobuf.Empty);
   rpc Login(LoginRequest) returns (LoginResponse);
+  rpc Me(MeRequest) returns (User);
   rpc Deposit(DepositRequest) returns (google.protobuf.Empty);
   rpc Withdraw(WithdrawRequest) returns (google.protobuf.Empty);
-  rpc Buy(BuyRequest) returns (google.protobuf.Empty);
+  rpc Buy(BuyRequest) returns (BuyResponse);
   rpc ListTransactions(ListTransactionsRequest) returns (ListTransactionsResponse);
 }

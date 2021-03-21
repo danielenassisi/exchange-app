@@ -9,11 +9,11 @@ export class ExchangeService {
   private static client = new ExchangeServiceClient(ExchangeService.ADDRESS, ChannelCredentials.createInsecure()) 
 
   async exchange(buyRequest: IBuyRequest) {
-    const { fromSymbol, toSymbol, value } = buyRequest
+    const { fromSymbol, value } = buyRequest
     const request = new ExchangeRequest()
 
     request.setFrom(fromSymbol == CurrencySymbol.EUR ? 0 : 1)
-    request.setTo(toSymbol == CurrencySymbol.EUR ? 0 : 1)
+    request.setTo(fromSymbol == CurrencySymbol.EUR ? 1 : 0)
     request.setValue(value)
 
     try {

@@ -27,6 +27,17 @@ function deserialize_users_BuyRequest(buffer_arg) {
   return users_pb.BuyRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_users_BuyResponse(arg) {
+  if (!(arg instanceof users_pb.BuyResponse)) {
+    throw new Error('Expected argument of type users.BuyResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_users_BuyResponse(buffer_arg) {
+  return users_pb.BuyResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_users_DepositRequest(arg) {
   if (!(arg instanceof users_pb.DepositRequest)) {
     throw new Error('Expected argument of type users.DepositRequest');
@@ -82,6 +93,17 @@ function deserialize_users_LoginResponse(buffer_arg) {
   return users_pb.LoginResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
+function serialize_users_MeRequest(arg) {
+  if (!(arg instanceof users_pb.MeRequest)) {
+    throw new Error('Expected argument of type users.MeRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_users_MeRequest(buffer_arg) {
+  return users_pb.MeRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
 function serialize_users_SignupRequest(arg) {
   if (!(arg instanceof users_pb.SignupRequest)) {
     throw new Error('Expected argument of type users.SignupRequest');
@@ -91,6 +113,17 @@ function serialize_users_SignupRequest(arg) {
 
 function deserialize_users_SignupRequest(buffer_arg) {
   return users_pb.SignupRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_users_User(arg) {
+  if (!(arg instanceof users_pb.User)) {
+    throw new Error('Expected argument of type users.User');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_users_User(buffer_arg) {
+  return users_pb.User.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_users_WithdrawRequest(arg) {
@@ -128,6 +161,17 @@ var UsersServiceService = exports.UsersServiceService = {
     responseSerialize: serialize_users_LoginResponse,
     responseDeserialize: deserialize_users_LoginResponse,
   },
+  me: {
+    path: '/users.UsersService/Me',
+    requestStream: false,
+    responseStream: false,
+    requestType: users_pb.MeRequest,
+    responseType: users_pb.User,
+    requestSerialize: serialize_users_MeRequest,
+    requestDeserialize: deserialize_users_MeRequest,
+    responseSerialize: serialize_users_User,
+    responseDeserialize: deserialize_users_User,
+  },
   deposit: {
     path: '/users.UsersService/Deposit',
     requestStream: false,
@@ -155,11 +199,11 @@ var UsersServiceService = exports.UsersServiceService = {
     requestStream: false,
     responseStream: false,
     requestType: users_pb.BuyRequest,
-    responseType: google_protobuf_empty_pb.Empty,
+    responseType: users_pb.BuyResponse,
     requestSerialize: serialize_users_BuyRequest,
     requestDeserialize: deserialize_users_BuyRequest,
-    responseSerialize: serialize_google_protobuf_Empty,
-    responseDeserialize: deserialize_google_protobuf_Empty,
+    responseSerialize: serialize_users_BuyResponse,
+    responseDeserialize: deserialize_users_BuyResponse,
   },
   listTransactions: {
     path: '/users.UsersService/ListTransactions',
