@@ -6,6 +6,33 @@
 
 import * as jspb from "google-protobuf";
 import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
+import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
+
+export class CurrentAccount extends jspb.Message { 
+    getId(): string;
+    setId(value: string): CurrentAccount;
+    getValue(): number;
+    setValue(value: number): CurrentAccount;
+    getSymbol(): Symbol;
+    setSymbol(value: Symbol): CurrentAccount;
+
+    serializeBinary(): Uint8Array;
+    toObject(includeInstance?: boolean): CurrentAccount.AsObject;
+    static toObject(includeInstance: boolean, msg: CurrentAccount): CurrentAccount.AsObject;
+    static extensions: {[key: number]: jspb.ExtensionFieldInfo<jspb.Message>};
+    static extensionsBinary: {[key: number]: jspb.ExtensionFieldBinaryInfo<jspb.Message>};
+    static serializeBinaryToWriter(message: CurrentAccount, writer: jspb.BinaryWriter): void;
+    static deserializeBinary(bytes: Uint8Array): CurrentAccount;
+    static deserializeBinaryFromReader(message: CurrentAccount, reader: jspb.BinaryReader): CurrentAccount;
+}
+
+export namespace CurrentAccount {
+    export type AsObject = {
+        id: string,
+        value: number,
+        symbol: Symbol,
+    }
+}
 
 export class User extends jspb.Message { 
     getId(): string;
@@ -18,6 +45,16 @@ export class User extends jspb.Message {
     setEmail(value: string): User;
     getIban(): string;
     setIban(value: string): User;
+
+    hasEurcurrentaccount(): boolean;
+    clearEurcurrentaccount(): void;
+    getEurcurrentaccount(): CurrentAccount | undefined;
+    setEurcurrentaccount(value?: CurrentAccount): User;
+
+    hasUsdcurrentaccount(): boolean;
+    clearUsdcurrentaccount(): void;
+    getUsdcurrentaccount(): CurrentAccount | undefined;
+    setUsdcurrentaccount(value?: CurrentAccount): User;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): User.AsObject;
@@ -36,6 +73,8 @@ export namespace User {
         surname: string,
         email: string,
         iban: string,
+        eurcurrentaccount?: CurrentAccount.AsObject,
+        usdcurrentaccount?: CurrentAccount.AsObject,
     }
 }
 
@@ -248,8 +287,13 @@ export class Transaction extends jspb.Message {
     setValue(value: number): Transaction;
     getSymbol(): Symbol;
     setSymbol(value: Symbol): Transaction;
-    getDate(): string;
-    setDate(value: string): Transaction;
+
+    hasDate(): boolean;
+    clearDate(): void;
+    getDate(): google_protobuf_timestamp_pb.Timestamp | undefined;
+    setDate(value?: google_protobuf_timestamp_pb.Timestamp): Transaction;
+    getOperation(): Operation;
+    setOperation(value: Operation): Transaction;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): Transaction.AsObject;
@@ -266,7 +310,8 @@ export namespace Transaction {
         id: string,
         value: number,
         symbol: Symbol,
-        date: string,
+        date?: google_protobuf_timestamp_pb.Timestamp.AsObject,
+        operation: Operation,
     }
 }
 
@@ -274,13 +319,13 @@ export class ListTransactionsRequest extends jspb.Message {
     getUserid(): string;
     setUserid(value: string): ListTransactionsRequest;
     clearDateList(): void;
-    getDateList(): Array<string>;
-    setDateList(value: Array<string>): ListTransactionsRequest;
-    addDate(value: string, index?: number): string;
+    getDateList(): Array<google_protobuf_timestamp_pb.Timestamp>;
+    setDateList(value: Array<google_protobuf_timestamp_pb.Timestamp>): ListTransactionsRequest;
+    addDate(value?: google_protobuf_timestamp_pb.Timestamp, index?: number): google_protobuf_timestamp_pb.Timestamp;
     clearCurrencyList(): void;
-    getCurrencyList(): Array<string>;
-    setCurrencyList(value: Array<string>): ListTransactionsRequest;
-    addCurrency(value: string, index?: number): string;
+    getCurrencyList(): Array<Symbol>;
+    setCurrencyList(value: Array<Symbol>): ListTransactionsRequest;
+    addCurrency(value: Symbol, index?: number): Symbol;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): ListTransactionsRequest.AsObject;
@@ -295,8 +340,8 @@ export class ListTransactionsRequest extends jspb.Message {
 export namespace ListTransactionsRequest {
     export type AsObject = {
         userid: string,
-        dateList: Array<string>,
-        currencyList: Array<string>,
+        dateList: Array<google_protobuf_timestamp_pb.Timestamp.AsObject>,
+        currencyList: Array<Symbol>,
     }
 }
 
@@ -325,4 +370,11 @@ export namespace ListTransactionsResponse {
 export enum Symbol {
     EUR = 0,
     USD = 1,
+}
+
+export enum Operation {
+    DEPOSIT = 0,
+    WITHDRAW = 1,
+    BUY_DEPOSIT = 2,
+    BUY_WITHDRAW = 3,
 }

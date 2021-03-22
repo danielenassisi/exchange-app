@@ -24,7 +24,49 @@ export const apiDoc = {
         },
         iban: {
           type: "string"
+        },
+        eurCurrentAccount: {
+          $ref: '#/definitions/CurrentAccount'
+        },
+        usdCurrentAccount: {
+          $ref: '#/definitions/CurrentAccount'
+        },
+      }
+    },
+    Transaction: {
+      properties: {
+        id: {
+          type: 'string',
+        },
+        date: {
+          type: 'string',
+          format: 'date',
+        },
+        value: {
+          type: 'number'
+        },
+        symbol: {
+          type: 'string',
+          enum: ['EUR', 'USD']
+        },
+        operation: {
+          type: 'string',
+          enum: ["WITHDRAW", "DEPOSIT", "BUY_WITHDRAW", "BUY_DEPOSIT"]
         }
+      }
+    },
+    CurrentAccount: {
+      properties: {
+        id: {
+          type: 'string',
+        },
+        value: {
+          type: 'number'
+        },
+        symbol: {
+          type: 'string',
+          enum: ['EUR', 'USD']
+        },
       }
     },
     Error: {
@@ -81,7 +123,8 @@ export const apiDoc = {
           minimum: 0,
         },
         symbol: {
-          type: 'string'
+          type: 'string',
+          enum: ['EUR', 'USD']
         }
       },
       required: ['value', 'symbol']
@@ -93,7 +136,8 @@ export const apiDoc = {
           minimum: 0,
         },
         symbol: {
-          type: 'string'
+          type: 'string',
+          enum: ['EUR', 'USD']
         }
       },
       required: ['value', 'symbol']
@@ -105,7 +149,8 @@ export const apiDoc = {
           minimum: 0,
         },
         symbol: {
-          type: 'string'
+          type: 'string',
+          enum: ['EUR', 'USD']
         }
       },
       required: ['value', 'symbol']

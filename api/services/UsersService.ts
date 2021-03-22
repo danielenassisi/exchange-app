@@ -1,16 +1,18 @@
 import { ISignupViewModel } from "../models/users/signup/ISignupViewModel"
 import { ILoginViewModel } from "../models/users/login/ILoginViewModel"
 import { UsersServiceClient } from "../proto_build/users_grpc_pb"
-import { SignupRequest, LoginRequest, LoginResponse, MeRequest, User, DepositRequest, Symbol, WithdrawRequest, BuyRequest, BuyResponse } from "../proto_build/users_pb"
+import { SignupRequest, LoginRequest, LoginResponse, MeRequest, User, DepositRequest, Symbol, WithdrawRequest, BuyRequest, BuyResponse, ListTransactionsRequest, Transaction, ListTransactionsResponse, Operation } from "../proto_build/users_pb"
 import { ChannelCredentials, ServiceError } from "@grpc/grpc-js"
 import { response } from "express"
 import { IDepositViewModel } from "../models/transactions/deposit/IDepositViewModel"
 import { IWithdrawViewModel } from "../models/transactions/withdraw/IWithdrawViewModel"
 import { IBuyViewModel } from "../models/transactions/buy/IBuyViewModel"
+import { Timestamp } from "google-protobuf/google/protobuf/timestamp_pb"
+import { TransactionType } from "../models/transactions/TransactionType"
 
 export class UsersService {
   private static ADDRESS = "users:9001"
-  private static client = new UsersServiceClient(UsersService.ADDRESS, ChannelCredentials.createInsecure()) 
+  private static client = new UsersServiceClient(UsersService.ADDRESS, ChannelCredentials.createInsecure())
 
   async signup(signupViewModel: ISignupViewModel) {
     const { email, name, surname, iban, password } = signupViewModel
@@ -29,10 +31,10 @@ export class UsersService {
           else resolve(response)
         })
       })
-    } catch(err) {
-      return false      
+    } catch (err) {
+      return false
     }
-    
+
 
     return true
   }
@@ -50,11 +52,37 @@ export class UsersService {
           else resolve(response)
         })
       })
+      const user = loginRes.getUser()
+      let eurCurrentAccount: object, usdCurrentAccount: object
+      if (user.getEurcurrentaccount()) {
+        eurCurrentAccount = {
+          id: user.getEurcurrentaccount().getId(),
+          value: user.getEurcurrentaccount().getValue(),
+          symbol: "EUR"
+        }
+      }
 
-      console.log(loginRes.toObject())
+      if (user.getUsdcurrentaccount()) {
+        usdCurrentAccount = {
+          id: user.getEurcurrentaccount().getId(),
+          value: user.getEurcurrentaccount().getValue(),
+          symbol: "USD"
+        }
+      }
 
-      return loginRes.toObject()
-    } catch(err) {
+      return {
+        token: loginRes.getToken(),
+        user: {
+          id: user.getId(),
+          name: user.getName(),
+          surname: user.getSurname(),
+          email: user.getEmail(),
+          iban: user.getIban(),
+          eurCurrentAccount,
+          usdCurrentAccount
+        }
+      }
+    } catch (err) {
       throw err
     }
   }
@@ -72,8 +100,36 @@ export class UsersService {
         })
       })
 
-      return user.toObject()
-    } catch(err) {
+      console.log(user)
+
+      let eurCurrentAccount: object, usdCurrentAccount: object
+      if (user.getEurcurrentaccount()) {
+        eurCurrentAccount = {
+          id: user.getEurcurrentaccount().getId(),
+          value: user.getEurcurrentaccount().getValue(),
+          symbol: "EUR"
+        }
+      }
+
+      if (user.getUsdcurrentaccount()) {
+        usdCurrentAccount = {
+          id: user.getEurcurrentaccount().getId(),
+          value: user.getEurcurrentaccount().getValue(),
+          symbol: "USD"
+        }
+      }
+
+      return {
+        id: user.getId(),
+        name: user.getName(),
+        surname: user.getSurname(),
+        email: user.getEmail(),
+        iban: user.getIban(),
+        eurCurrentAccount,
+        usdCurrentAccount
+      }
+    } catch (err) {
+      console.log(err)
       throw err
     }
   }
@@ -92,7 +148,7 @@ export class UsersService {
           else resolve(res)
         })
       })
-    } catch(err) {
+    } catch (err) {
       throw err as ServiceError
     }
 
@@ -113,7 +169,7 @@ export class UsersService {
           else resolve(res)
         })
       })
-    } catch(e) {
+    } catch (e) {
       throw e as ServiceError
     }
 
@@ -135,10 +191,57 @@ export class UsersService {
         })
       })
 
-      console.log(buy.toObject())
-
       return buy.toObject()
-    } catch(e) {
+    } catch (e) {
+      throw e as ServiceError
+    }
+  }
+
+  async listTransactions(userId: string, dates: Date[], curriences: ("USD" | "EUR")[]) {
+    const request = new ListTransactionsRequest()
+
+    request.setUserid(userId)
+    request.setDateList(dates.map(date => {
+      const timestamp = new Timestamp()
+
+      timestamp.fromDate(date)
+
+      return timestamp
+    }))
+    request.setCurrencyList(curriences.map(curr =>
+      curr == "EUR" ? Symbol.EUR : Symbol.USD
+    ))
+
+    try {
+      const transactions: ListTransactionsResponse = await new Promise((resolve, reject) => {
+        UsersService.client.listTransactions(request, (error, response) => {
+          if (error) reject(error)
+          else resolve(response)
+        })
+      })
+
+      return transactions.getTransactionsList().map(tr => {
+        const resOp = tr.getOperation()
+        let operation: TransactionType
+
+        if (resOp == Operation.DEPOSIT)
+          operation = TransactionType.DEPOSIT
+        if (resOp == Operation.WITHDRAW)
+          operation = TransactionType.WITHDRAW
+        if (resOp == Operation.BUY_DEPOSIT)
+          operation = TransactionType.BUY_DEPOSIT
+        if (resOp == Operation.BUY_WITHDRAW)
+          operation = TransactionType.BUY_WITHDRAW
+
+        return {
+          id: tr.getId(),
+          date: tr.getDate().toDate(),
+          value: tr.getValue(),
+          symbol: tr.getSymbol() == Symbol.EUR ? "EUR" : "USD",
+          operation
+        }
+      })
+    } catch (e) {
       throw e as ServiceError
     }
   }

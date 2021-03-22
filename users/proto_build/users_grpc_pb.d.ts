@@ -8,6 +8,7 @@ import * as grpc from "@grpc/grpc-js";
 import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";
 import * as users_pb from "./users_pb";
 import * as google_protobuf_empty_pb from "google-protobuf/google/protobuf/empty_pb";
+import * as google_protobuf_timestamp_pb from "google-protobuf/google/protobuf/timestamp_pb";
 
 interface IUsersServiceService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
     signup: IUsersServiceService_ISignup;

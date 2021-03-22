@@ -5,6 +5,7 @@ import IBuyRequest from "../models/IBuyRequest"
 import { CurrencySymbol, Operation } from "@prisma/client"
 import { ServiceError } from "@grpc/grpc-js"
 import { Status } from "@grpc/grpc-js/build/src/constants"
+import { DEFAULT_ECDH_CURVE } from "tls"
 
 
 
@@ -37,7 +38,7 @@ export async function createDeposit({ userId, symbol, value }: IDepositRequest):
       })
 
       await prisma.$transaction([createTransaction, createCurrentAccount])
-      
+
     } else {
       const updateCurrentAccount = prisma.currentAccount.update({
         where: {
@@ -47,11 +48,11 @@ export async function createDeposit({ userId, symbol, value }: IDepositRequest):
           value: currentAccount.value.add(value)
         }
       })
-  
+
       await prisma.$transaction([createTransaction, updateCurrentAccount])
     }
     return true
-  } catch(e) {
+  } catch (e) {
     throw { code: Status.INTERNAL } as ServiceError
   }
 }
@@ -90,7 +91,7 @@ export async function createWithdraw({ userId, symbol, value }: IWithdrawRequest
     await prisma.$transaction([createTransaction, updateCurrentAccout])
 
     return true
-  } catch(e) {
+  } catch (e) {
     throw { code: Status.INTERNAL } as ServiceError
   }
 }
@@ -171,9 +172,72 @@ export async function createBuy({ userId, value, fromSymbol }: IBuyRequest, conv
 
       await prisma.$transaction([createWithdrawTransaction, createDepositTransaction, updateDepositAccount, updateCurrentAccountWithdraw])
     }
-    
+
     return true
-  } catch(e) {
+  } catch (e) {
     throw e
   }
+}
+
+export async function getTransactions(userId: string, dates: Date[], currencies: CurrencySymbol[]) {
+  try {
+    if (dates.length == 0 && currencies.length == 0) {
+      const transactions = await prisma.transaction.findMany({
+        where: {
+          userId
+        }
+      })
+
+      return transactions
+    }
+
+    if (dates.length == 0 && currencies.length != 0) {
+      const transactions = await prisma.transaction.findMany({
+        where: {
+          userId,
+          symbol: {
+            in: currencies
+          }
+        }
+      })
+
+      return transactions
+    }
+
+    if (dates.length != 0 && currencies.length == 0) {
+      const transactions = await prisma.transaction.findMany({
+        where: {
+          userId
+        }
+      })
+
+
+
+      return transactions.filter(tr =>
+        dates.some(date =>
+          tr.date.getFullYear() == date.getFullYear() &&
+          tr.date.getMonth() == date.getMonth() &&
+          tr.date.getDate() == date.getDate()
+        ))
+    }
+
+    const transactions = await prisma.transaction.findMany({
+      where: {
+        userId,
+        symbol: {
+          in: currencies
+        }
+      }
+    })
+
+    return transactions.filter(tr =>
+      dates.some(date =>
+        tr.date.getFullYear() == date.getFullYear() &&
+        tr.date.getMonth() == date.getMonth() &&
+        tr.date.getDate() == date.getDate()
+      ))
+  } catch (e) {
+    throw { code: Status.INTERNAL } as ServiceError
+  }
+
 }

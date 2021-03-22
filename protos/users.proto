@@ -1,8 +1,15 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
 
 package users;
+
+message CurrentAccount {
+  string id = 1;
+  double value = 2;
+  Symbol symbol = 3;
+}
 
 message User {
   string id = 1;
@@ -10,11 +17,20 @@ message User {
   string surname = 3;
   string email = 4;
   string iban = 5;
+  CurrentAccount eurCurrentAccount = 6;
+  CurrentAccount usdCurrentAccount = 7;
 }
 
 enum Symbol {
   EUR = 0;
   USD = 1;
+}
+
+enum Operation {
+  DEPOSIT = 0;
+  WITHDRAW = 1;
+  BUY_DEPOSIT = 2;
+  BUY_WITHDRAW = 3;
 }
 
 message SignupRequest {
@@ -67,13 +83,14 @@ message Transaction {
   string id = 1;
   double value = 2;
   Symbol symbol = 3;
-  string date = 4;
+  google.protobuf.Timestamp date = 4;
+  Operation operation = 5;
 }
 
 message ListTransactionsRequest {
   string userId = 1;
-  repeated string date = 2;
-  repeated string currency = 3;
+  repeated google.protobuf.Timestamp date = 2;
+  repeated Symbol currency = 3;
 }
 
 message ListTransactionsResponse {
