@@ -1,0 +1,7 @@
+
+export enum TransactionType {
+  WITHDRAW = "WITHDRAW",
+  DEPOSIT = "DEPOSIT",
+  BUY_WITHDRAW = "BUY_WITHDRAW",
+  BUY_DEPOSIT = "BUY_DEPOSIT"
+}

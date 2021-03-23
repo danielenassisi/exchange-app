@@ -11,6 +11,7 @@ import { LoginViewModel } from "../models/LoginViewModel"
 import { LoginDto } from "../models/LoginDto"
 import { AxiosError } from 'axios'
 import { Alert } from '@material-ui/lab'
+import { setToken } from "../utils/auth"
 
 const useStyles = makeStyles(theme => ({
   avatar: {
@@ -46,8 +47,8 @@ export default function LoginForm() {
   const loginMutation = useMutation((vm: LoginViewModel) => api.post<LoginDto>('/users/login', vm), {
     onSuccess: (res) => {
 
-      localStorage.setItem('token', res.data.token)
-      history.push('/dashboard')
+      setToken(res.data.token)
+      history.push('/dashboard/account')
     },
     onError: (err: AxiosError) => {
       if (err?.code && parseInt(err?.code) % 100 == 4) {

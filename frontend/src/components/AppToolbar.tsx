@@ -4,8 +4,9 @@ import Button from '@material-ui/core/Button'
 import ButtonGroup from '@material-ui/core/ButtonGroup'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import React from 'react'
+import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
+import { useMeQuery } from "../hooks/useMeQuery"
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -16,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AppToolbar() {
+const AppToolbar: FC = (props) => {
 
   const classes = useStyles()
 
@@ -26,14 +27,9 @@ export default function AppToolbar() {
         <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
           Exchange app
         </Typography>
-        {
-          
-        }
-        <ButtonGroup variant="text" color="inherit">
-          <Button component={Link} to="/login">Login</Button>
-          <Button component={Link} to="/register">Registrati</Button>
-        </ButtonGroup>
+        {props.children}
       </Toolbar>
     </AppBar>
   )
 }
+export default AppToolbar

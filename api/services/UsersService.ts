@@ -107,14 +107,14 @@ export class UsersService {
         eurCurrentAccount = {
           id: user.getEurcurrentaccount().getId(),
           value: user.getEurcurrentaccount().getValue(),
-          symbol: "EUR"
+          symbol: "EUR",
         }
       }
 
       if (user.getUsdcurrentaccount()) {
         usdCurrentAccount = {
-          id: user.getEurcurrentaccount().getId(),
-          value: user.getEurcurrentaccount().getValue(),
+          id: user.getUsdcurrentaccount().getId(),
+          value: user.getUsdcurrentaccount().getValue(),
           symbol: "USD"
         }
       }

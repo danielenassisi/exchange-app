@@ -7,6 +7,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import Dashboard from './layouts/Dashboard';
+import NotLoggedButtons from "./components/NotLoggedButtons"
+import UserAvatar from "./components/UserAvatar"
+import Transactions from "./pages/Transactions"
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,12 +35,30 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <div className={classes.root}>
         <CssBaseline />
-        <AppToolbar />
+        <AppToolbar>
+          <Switch>
+            <Route path={['/login', '/register']}>
+              <NotLoggedButtons />
+            </Route>
+            <Route path="/dashboard">
+              <UserAvatar></UserAvatar>
+            </Route>
+          </Switch>
+        </AppToolbar>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <Switch>
             <Route path="/dashboard">
-              <Dashboard />
+              <Dashboard>
+                <Switch>
+                  <Route path="/dashboard/account">
+                    ciao
+                  </Route>
+                  <Route path="/dashboard/transactions">
+                    <Transactions />
+                  </Route>
+                </Switch>
+              </Dashboard>
             </Route>
             <Route path="/login">
               <Login></Login>
