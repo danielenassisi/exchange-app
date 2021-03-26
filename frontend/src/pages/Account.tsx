@@ -1,4 +1,4 @@
-import { Avatar, Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControl, Grid, List, ListItem, ListItemIcon, ListItemText, MenuItem, Paper, Select, Snackbar, TextField, Typography } from '@material-ui/core'
+import { Avatar, Box, Button, CircularProgress, Dialog, DialogActions, DialogContent, DialogTitle, Divider, FormControl, Grid, List, ListItem, ListItemIcon, ListItemText, MenuItem, Paper, Select, Snackbar, TextField, Typography } from '@material-ui/core'
 import React, { FC, useState } from 'react'
 import UserAvatar from '../components/UserAvatar'
 import EuroIcon from "@material-ui/icons/Euro"
@@ -86,7 +86,7 @@ const Account: FC = () => {
 
   return (
     <React.Fragment>
-      { isLoading ? "Caricamento..." : null}
+      { isLoading ? <Grid item container xs={12} justify="center" alignItems="center"><CircularProgress /></Grid> : null}
       { error ? "Errore" : null}
       {
         data ?
@@ -105,9 +105,15 @@ const Account: FC = () => {
                 <Typography variant="h6" color="textSecondary" align="center">Iban: {data.data.iban}</Typography>
               </Box>
               <Grid item container justify="space-around">
-                <Button color="primary" variant="contained" size="large" onClick={() => setOpenDeposit(true)}>Deposita</Button>
-                <Button disabled={(!data?.data.eurCurrentAccount && !data?.data.usdCurrentAccount)} color="primary" variant="contained" size="large" onClick={() => setOpenWithdraw(true)}>Preleva</Button>
-                <Button disabled={(!data?.data.eurCurrentAccount && !data?.data.usdCurrentAccount)} color="primary" variant="contained" size="large" onClick={() => setOpenBuy(true)}>Converti denaro</Button>
+                <Box p={3}>
+                  <Button color="primary" variant="contained" size="large" onClick={() => setOpenDeposit(true)}>Deposita</Button>
+                </Box>
+                <Box p={3}>
+                  <Button disabled={(!data?.data.eurCurrentAccount && !data?.data.usdCurrentAccount)} color="primary" variant="contained" size="large" onClick={() => setOpenWithdraw(true)}>Preleva</Button>
+                </Box>
+                <Box p={3}>
+                  <Button disabled={(!data?.data.eurCurrentAccount && !data?.data.usdCurrentAccount)} color="primary" variant="contained" size="large" onClick={() => setOpenBuy(true)}>Converti denaro</Button>
+                </Box>
               </Grid>
               <Box p={3}></Box>
               <Divider></Divider>

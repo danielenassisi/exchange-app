@@ -1,9 +1,9 @@
 import React, { FC } from 'react'
-import { GridColDef, DataGrid, GridLocaleText } from "@material-ui/data-grid"
+import { GridColDef, DataGrid, GridLocaleText, GridSortDirection } from "@material-ui/data-grid"
 import { useQuery } from 'react-query'
 import { authApi } from "../utils/api"
 import { Transaction } from "../models/Transaction"
-import { Paper } from '@material-ui/core'
+import { CircularProgress, Grid, Paper } from '@material-ui/core'
 
 const columns: GridColDef[] = [
   {
@@ -92,12 +92,17 @@ const Transactions: FC = () => {
 
   return (
     <Paper style={{height: '90vh', width: '100%'}}>
-      {isLoading ? "Caricamento..." : null}
+      {isLoading ? <Grid item container xs={12} justify="center" alignItems="center"><CircularProgress /></Grid> : null}
       {error ? "Errore" : null}
       {(!isLoading && !error) ? <DataGrid autoPageSize columns={columns} rows={data?.data.map(tr => ({
         ...tr,
         date: new Date(tr.date)
-      })) || []} localeText={locales}></DataGrid> : null}
+      })) || []} localeText={locales} sortModel={[
+        {
+          field: 'date',
+          sort: 'desc' as GridSortDirection,
+        },
+      ]}></DataGrid> : null}
     </Paper>
   )
 }

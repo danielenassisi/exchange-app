@@ -13,14 +13,14 @@ import Container from '@material-ui/core/Container';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import NotificationsIcon from '@material-ui/icons/Notifications';
-import { Divider, Grid, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Divider, Grid, List, ListItem, ListItemIcon, ListItemText, useMediaQuery, useTheme } from '@material-ui/core';
 import AccountCircleIcon from "@material-ui/icons/AccountCircle"
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance"
 import ExitToAppIcon from "@material-ui/icons/ExitToApp"
 import { Link, useHistory, useRouteMatch } from 'react-router-dom';
 import { removeToken } from '../utils/auth';
 
-const drawerWidth = 240;
+const drawerWidth = '15%';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -66,6 +66,9 @@ const Dashboard: FC = (props) => {
     history.push('/login')
   }
 
+  const theme = useTheme();
+  const matches = useMediaQuery(theme.breakpoints.up('sm'));
+
   const { path, url } = useRouteMatch()
 
   return (
@@ -83,12 +86,12 @@ const Dashboard: FC = (props) => {
             {['Il mio profilo', 'Le mie transazioni',].map((text, index) => (
               <ListItem key={text} button component={Link} to={`${index == 0 ? 'account' : 'transactions'}`}>
                 <ListItemIcon>{index % 2 === 0 ? <AccountCircleIcon /> : <AccountBalanceIcon />}</ListItemIcon>
-                <ListItemText primary={text} />
+                {matches && <ListItemText primary={text} />}
               </ListItem>
             ))}
             <ListItem button onClick={onLogout}>
               <ListItemIcon><ExitToAppIcon /></ListItemIcon>
-              <ListItemText primary="Logout" />
+              {matches && <ListItemText primary="Logout" />}
             </ListItem>
           </List>
         </div>
