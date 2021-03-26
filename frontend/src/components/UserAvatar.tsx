@@ -1,11 +1,11 @@
 import { Avatar } from '@material-ui/core'
-import React from 'react'
+import React, { FC } from 'react'
 import { useMeQuery } from "../hooks/useMeQuery"
 
-function UserAvatar() {
+const UserAvatar: FC<{ size?: number }> = (props) => {
   const { isLoading, error, data } = useMeQuery()
   return (
-    <Avatar>
+    <Avatar style={ props.size ? { width: props.size, height: props.size} : {} }>
       {
         (isLoading || error) ?
           "U"

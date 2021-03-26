@@ -12,7 +12,7 @@ export const bearerStrategy = new Strategy((token, done) => {
       done(null, user)
     })
     .catch((err: ServiceError) => {
-      if (err.code === Status.NOT_FOUND) {
+      if (err.code === Status.NOT_FOUND || err.code === Status.INVALID_ARGUMENT) {
         done(null, false)
       }
       done(err)

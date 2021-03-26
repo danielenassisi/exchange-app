@@ -16,7 +16,9 @@ import NotificationsIcon from '@material-ui/icons/Notifications';
 import { Divider, Grid, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import AccountCircleIcon from "@material-ui/icons/AccountCircle"
 import AccountBalanceIcon from "@material-ui/icons/AccountBalance"
-import { Link, useRouteMatch } from 'react-router-dom';
+import ExitToAppIcon from "@material-ui/icons/ExitToApp"
+import { Link, useHistory, useRouteMatch } from 'react-router-dom';
+import { removeToken } from '../utils/auth';
 
 const drawerWidth = 240;
 
@@ -50,6 +52,8 @@ const useStyles = makeStyles((theme: Theme) =>
 const Dashboard: FC = (props) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
+  const history = useHistory()
+  
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -57,7 +61,12 @@ const Dashboard: FC = (props) => {
     setOpen(!open);
   };
 
-  const {path, url} = useRouteMatch()
+  const onLogout = () => {
+    removeToken()
+    history.push('/login')
+  }
+
+  const { path, url } = useRouteMatch()
 
   return (
     <React.Fragment>
@@ -77,6 +86,10 @@ const Dashboard: FC = (props) => {
                 <ListItemText primary={text} />
               </ListItem>
             ))}
+            <ListItem button onClick={onLogout}>
+              <ListItemIcon><ExitToAppIcon /></ListItemIcon>
+              <ListItemText primary="Logout" />
+            </ListItem>
           </List>
         </div>
       </Drawer>

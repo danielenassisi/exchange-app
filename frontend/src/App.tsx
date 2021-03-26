@@ -10,6 +10,7 @@ import Dashboard from './layouts/Dashboard';
 import NotLoggedButtons from "./components/NotLoggedButtons"
 import UserAvatar from "./components/UserAvatar"
 import Transactions from "./pages/Transactions"
+import Account from './pages/Account';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -52,7 +53,7 @@ export default function App() {
               <Dashboard>
                 <Switch>
                   <Route path="/dashboard/account">
-                    ciao
+                    <Account />
                   </Route>
                   <Route path="/dashboard/transactions">
                     <Transactions />
