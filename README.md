@@ -6,6 +6,8 @@ L'applicativo si compone di quattro microservizi:
  - users
  - frontend
 
+ Tutti i microservizi sono stati sviluppati utilizzando Typescript e la comunicazione tra di essi avviene tramite protocollo GRPC utilizzando come base i file .proto che si trovano nella cartella protos. 
+
 ## Come avviare il progetto
 L'unico prerequisito per avviare il progetto su una macchina è avere installato Docker.
 Di seguito sono indicati i passi per garantire un corretto funzionamento:
